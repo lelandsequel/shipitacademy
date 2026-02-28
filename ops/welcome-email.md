@@ -1,50 +1,52 @@
 # Welcome Email
 
-**Subject:** You're in. Here's what happens next.
+**Subject:** Ship OS is ready. Here's your access.
 
 ---
 
-Welcome to Operator Foundry.
+Welcome to Ship Weekend.
 
-You've been accepted into the Weekend Intensive. This email covers what you need to know and what you need to do before the weekend.
+You now have access to Ship OS — your structured build kit for shipping a real AI system in 48 hours.
 
-**Your track:** [Ship Systems / Leverage Systems]
-**Dates:** [Weekend dates]
-**Location:** [Location / Virtual]
-**Facilitator:** TJ Jourdan
-
----
-
-## What You're Building
-
-**Ship Systems track:** You will build and deploy a working AI system in 48 hours. You'll leave with a defined, designed, built, tested, and deployed system — live URL, demo video, full documentation.
-
-**Leverage Systems track:** You will build an operator leverage package. You'll leave with a working AI pipeline, a professional value asset, positioning, proof of results, and one real outreach message sent.
-
-This is not a lecture series. There are no slides. Every module produces an artifact. You ship before Sunday is over.
+**What you got:** Ship OS (curriculum + prompts + tools)
+**Next Ship Weekend:** March 7–8, 2026
+**Format:** Self-directed. Async. At your pace.
 
 ---
 
-## Before the Weekend
+## What Is Ship OS
 
-Complete the setup checklist (attached). Everything on it needs to be done before Saturday morning. If you show up without your environment configured, you'll spend the first two hours debugging instead of building.
+Ship OS is a 9-module build system. It contains everything you need to go from idea to deployed: the full curriculum, step-by-step execution prompts, architecture templates, eval checklists, and deployment guides.
 
-The checklist includes:
-- Development environment setup
-- API keys and accounts
-- Repository access
-- Communication channel (Discord)
-
-**Deadline:** Complete setup by Thursday evening before the weekend.
+Ship Weekend is not a course. There is no instructor. No live sessions. No schedule. Just you, the system, and 48 hours.
 
 ---
 
-## What to Expect
+## Your Two Tracks
 
-- Saturday: define, design, scaffold, build
-- Sunday: evaluate, deploy, demo (Ship Systems) / prove, position, outreach (Leverage Systems)
-- Pace is fast. Modules are timed. You will feel behind at some point — that's normal. Ask for help early.
-- Facilitator and support are there to unblock you, not to lecture you.
+**Ship Systems (Track A):** Build and deploy a working AI system — defined, designed, built, tested, deployed, and demoed.
+
+**Leverage Systems (Track B):** Build an operator leverage package — working AI pipeline, professional value asset, positioning, proof, and real outreach sent.
+
+Pick one. Ship OS guides you through either.
+
+---
+
+## How to Access Ship OS
+
+Your Ship OS build kit is linked below. Open it and start with Module 01: Orient.
+
+[Link to Ship OS curriculum]
+
+**Setup:** Make sure your development environment is ready before you start building. Ship OS includes a setup checklist — complete it first so you can build without interruption.
+
+---
+
+## Community (Optional)
+
+Join the Discord to share what you're building, post your demo, or work alongside other builders. This is entirely optional — Ship Weekend works fully solo.
+
+[Discord link]
 
 ---
 
@@ -52,6 +54,6 @@ The checklist includes:
 
 Ship over polish. Working beats elegant. Done beats perfect.
 
-See you Saturday.
+See you on the other side.
 
 — Operator Foundry
