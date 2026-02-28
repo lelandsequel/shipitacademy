@@ -11,7 +11,7 @@ You've been accepted into the Weekend Intensive. This email covers what you need
 **Your track:** [Ship Systems / Leverage Systems]
 **Dates:** [Weekend dates]
 **Location:** [Location / Virtual]
-**Facilitator:** Charles Jourdan
+**Facilitator:** TJ Jourdan
 
 ---
 

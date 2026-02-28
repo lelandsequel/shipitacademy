@@ -652,35 +652,26 @@
         <div class="container">
             <p class="section-label">Apply</p>
             <h2 class="section-heading">Apply for the next cohort.</h2>
-            <p class="section-text">Cohorts are small. Applications are reviewed individually.</p>
+            <p class="section-text">Cohorts are small. 12 seats max. Applications reviewed individually.</p>
 
-            <form class="apply-form" action="mailto:leland@cl-strategy.com" method="POST" enctype="text/plain">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required placeholder="Full name">
+            <div style="display:flex;gap:24px;justify-content:center;margin:24px 0 36px;flex-wrap:wrap;">
+                <div style="background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:20px 32px;text-align:center;">
+                    <div style="color:#888;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Next Cohort</div>
+                    <div style="color:#fff;font-size:1.2rem;font-weight:700;">March 7–8, 2026</div>
                 </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required placeholder="you@example.com">
+                <div style="background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:20px 32px;text-align:center;">
+                    <div style="color:#888;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Tuition</div>
+                    <div style="color:#d4a853;font-size:1.2rem;font-weight:700;">$497 <span style="color:#555;font-size:0.85rem;font-weight:400;">/ first cohort</span></div>
                 </div>
-
-                <div class="form-group">
-                    <label for="track">Which track?</label>
-                    <select id="track" name="track" required>
-                        <option value="" disabled selected>Select a track</option>
-                        <option value="ship-systems">Ship Systems — build and deploy an AI system</option>
-                        <option value="leverage-systems">Leverage Systems — build your operator leverage package</option>
-                    </select>
+                <div style="background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:20px 32px;text-align:center;">
+                    <div style="color:#888;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Seats</div>
+                    <div style="color:#fff;font-size:1.2rem;font-weight:700;">12 max</div>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="why">Why do you want in?</label>
-                    <textarea id="why" name="why" required placeholder="What are you building or trying to build? What would shipping this weekend mean for you?"></textarea>
-                </div>
-
-                <button type="submit" class="submit-button">Submit Application &rarr;</button>
-            </form>
+            <!-- TYPEFORM EMBED — replace YOUR_TYPEFORM_ID with your form ID -->
+            <div data-tf-live="YOUR_TYPEFORM_ID" style="width:100%;min-height:500px;"></div>
+            <script src="//embed.typeform.com/next/embed.js"></script>
         </div>
     </section>
 
@@ -690,6 +681,7 @@
             <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
             <div class="footer-links">
                 <a href="#apply">Apply</a>
+                <a href="/privacy.html">Privacy Policy</a>
             </div>
         </div>
     </footer>
