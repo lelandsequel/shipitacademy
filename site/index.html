@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operator Foundry — Weekend Intensives | ShipItAcademy.com</title>
+    <meta name="description" content="Ship a real AI system in 48 hours. Two tracks. One cohort. No fluff.">
+    <meta property="og:url" content="https://shipitacademy.com">
+    <meta property="og:title" content="Operator Foundry — Ship a real AI system in 48 hours">
+    <meta property="og:description" content="Weekend intensives for builders who ship. Two tracks. One cohort. No fluff.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Operator Foundry — Ship a real AI system in 48 hours">
+    <meta name="twitter:description" content="Weekend intensives for builders who ship. Two tracks. One cohort. No fluff.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0A;
+            --bg-elevated: #111111;
+            --bg-card: #161616;
+            --border: #222222;
+            --text-primary: #EDEDED;
+            --text-secondary: #888888;
+            --text-tertiary: #555555;
+            --accent: #0066FF;
+            --accent-dim: rgba(0, 102, 255, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ---- NAV ---- */
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        /* ---- HERO ---- */
+        .hero {
+            padding: 120px 0 100px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.1;
+            max-width: 680px;
+        }
+
+        .hero .sub {
+            margin-top: 24px;
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 520px;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 14px 28px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.15s;
+        }
+
+        .cta-button:hover {
+            opacity: 0.88;
+            text-decoration: none;
+        }
+
+        /* ---- SECTIONS ---- */
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .section-heading {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .section-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 640px;
+            line-height: 1.7;
+        }
+
+        .section-text + .section-text {
+            margin-top: 16px;
+        }
+
+        /* ---- TRACKS ---- */
+        .tracks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .track-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px;
+        }
+
+        .track-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .track-card .track-tag {
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--accent);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .track-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .track-card .artifact-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .track-card .artifact-list li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 6px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .track-card .artifact-list li::before {
+            content: "\2192";
+            margin-right: 8px;
+            color: var(--text-tertiary);
+        }
+
+        /* ---- WEEKEND ---- */
+        .weekend-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .day-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px;
+        }
+
+        .day-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+        }
+
+        .day-card .step {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .day-card .step-num {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            min-width: 20px;
+        }
+
+        .day-card .step-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* ---- WHO ---- */
+        .who-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .who-item {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .who-item .who-label {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .who-item .who-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .not-for {
+            margin-top: 32px;
+            padding: 20px 24px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .not-for strong {
+            color: var(--text-primary);
+        }
+
+        /* ---- FACILITATOR ---- */
+        .facilitator-card {
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+            margin-top: 32px;
+        }
+
+        .facilitator-photo {
+            width: 96px;
+            height: 96px;
+            border-radius: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .facilitator-info h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .facilitator-info p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ---- APPLY ---- */
+        .apply-section {
+            background: var(--bg-elevated);
+        }
+
+        .apply-form {
+            max-width: 480px;
+            margin-top: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 15px;
+            font-family: inherit;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        .submit-button {
+            display: inline-block;
+            padding: 14px 32px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: inherit;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.15s;
+        }
+
+        .submit-button:hover {
+            opacity: 0.88;
+        }
+
+        /* ---- FOOTER ---- */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero .sub {
+                font-size: 16px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .tracks-grid,
+            .weekend-grid,
+            .who-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .facilitator-card {
+                flex-direction: column;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="container">
+            <span class="logo">Operator Foundry</span>
+            <a href="#apply" class="nav-link">Apply</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="container">
+            <h1>Ship a real AI system in 48 hours.</h1>
+            <p class="sub">Operator Foundry Weekend Intensives. Two tracks. One cohort. No fluff.</p>
+            <a href="#apply" class="cta-button">Apply for the next cohort &rarr;</a>
+        </div>
+    </header>
+
+    <!-- THE PROBLEM -->
+    <section>
+        <div class="container">
+            <p class="section-label">The Problem</p>
+            <h2 class="section-heading">Most AI training is demos and slides.</h2>
+            <p class="section-text">You attend a workshop. You watch someone else build something. You take notes. You leave with a certificate and a head full of concepts. You build nothing.</p>
+            <p class="section-text">Operator Foundry is different. You build something real and ship it before Sunday is over. Every module produces an artifact. Every participant deploys. There are no lectures, no slides, no theory blocks. You define, design, build, test, deploy, and demo a working system in one weekend.</p>
+        </div>
+    </section>
+
+    <!-- TWO TRACKS -->
+    <section>
+        <div class="container">
+            <p class="section-label">Two Tracks</p>
+            <h2 class="section-heading">Choose your build.</h2>
+            <p class="section-text">Both tracks run the same weekend. Same cohort. Same intensity. Different outcomes.</p>
+
+            <div class="tracks-grid">
+                <div class="track-card">
+                    <span class="track-tag">Track A</span>
+                    <h3>Ship Systems</h3>
+                    <p>Build and deploy a working AI system. Define the problem, design the architecture, scaffold the agent, implement the core capability, add evaluation, deploy to a live URL, and record a demo.</p>
+                    <ul class="artifact-list">
+                        <li>System definition and architecture spec</li>
+                        <li>Working agent with implemented tools</li>
+                        <li>Automated eval suite</li>
+                        <li>User interface (CLI, web, or API)</li>
+                        <li>Live deployed system</li>
+                        <li>2-minute demo video</li>
+                    </ul>
+                </div>
+
+                <div class="track-card">
+                    <span class="track-tag">Track B</span>
+                    <h3>Leverage Systems</h3>
+                    <p>Build your operator leverage package. Map where AI multiplies your output, design and build the pipeline, create a professional value asset, write positioning, capture proof, and send real outreach.</p>
+                    <ul class="artifact-list">
+                        <li>Leverage map and opportunity thesis</li>
+                        <li>Working AI-powered pipeline</li>
+                        <li>Professional value asset</li>
+                        <li>Positioning and offer description</li>
+                        <li>Before/after proof with metrics</li>
+                        <li>One outreach message sent</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE WEEKEND -->
+    <section>
+        <div class="container">
+            <p class="section-label">The Weekend</p>
+            <h2 class="section-heading">Two days. Nine modules. You ship.</h2>
+
+            <div class="weekend-grid">
+                <div class="day-card">
+                    <h3>Saturday</h3>
+                    <div class="step">
+                        <span class="step-num">01</span>
+                        <span class="step-text">Kickoff. Frame the goal. Set the standard.</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">02</span>
+                        <span class="step-text">Define. Precisely scope what you're building.</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">03</span>
+                        <span class="step-text">Design. Architecture, data flow, tool selection.</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">04</span>
+                        <span class="step-text">Scaffold. Repo, skeleton, stubs. Runnable project.</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">05</span>
+                        <span class="step-text">Build. Core capability, end-to-end, real data.</span>
+                    </div>
+                </div>
+
+                <div class="day-card">
+                    <h3>Sunday</h3>
+                    <div class="step">
+                        <span class="step-num">06</span>
+                        <span class="step-text">Evaluate. Test cases, pass/fail, automated checks.</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">07</span>
+                        <span class="step-text">Interface. CLI, web UI, or API. Make it usable.</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">08</span>
+                        <span class="step-text">Deploy. Live URL. No "works on my machine."</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">09</span>
+                        <span class="step-text">Demo. Two minutes. What it does. How it works.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHO THIS IS FOR -->
+    <section>
+        <div class="container">
+            <p class="section-label">Who This Is For</p>
+            <h2 class="section-heading">Builders who ship.</h2>
+
+            <div class="who-grid">
+                <div class="who-item">
+                    <div class="who-label">Developers</div>
+                    <div class="who-desc">You write code and want to build AI systems, not just call APIs.</div>
+                </div>
+                <div class="who-item">
+                    <div class="who-label">Operators</div>
+                    <div class="who-desc">You run a practice or business and want AI to multiply your output.</div>
+                </div>
+                <div class="who-item">
+                    <div class="who-label">Founders</div>
+                    <div class="who-desc">You need to move faster and want AI infrastructure, not AI hype.</div>
+                </div>
+                <div class="who-item">
+                    <div class="who-label">Engineers</div>
+                    <div class="who-desc">You want hands-on system building, not another webinar.</div>
+                </div>
+            </div>
+
+            <div class="not-for">
+                <strong>Not for beginners.</strong> You should be comfortable writing code, using APIs, and working in a terminal. This is a build environment, not an introduction to programming.
+            </div>
+        </div>
+    </section>
+
+    <!-- FACILITATOR -->
+    <section>
+        <div class="container">
+            <p class="section-label">Facilitator</p>
+            <h2 class="section-heading">TJ Jourdan</h2>
+
+            <div class="facilitator-card">
+                <div class="facilitator-photo">[Photo]</div>
+                <div class="facilitator-info">
+                    <p>[Bio placeholder — practitioner background, systems built, relevant experience. 2-3 sentences. No fluff.]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- APPLY -->
+    <section id="apply" class="apply-section">
+        <div class="container">
+            <p class="section-label">Apply</p>
+            <h2 class="section-heading">Apply for the next cohort.</h2>
+            <p class="section-text">Cohorts are small. Applications are reviewed individually.</p>
+
+            <form class="apply-form" action="mailto:leland@cl-strategy.com" method="POST" enctype="text/plain">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="you@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="track">Which track?</label>
+                    <select id="track" name="track" required>
+                        <option value="" disabled selected>Select a track</option>
+                        <option value="ship-systems">Ship Systems — build and deploy an AI system</option>
+                        <option value="leverage-systems">Leverage Systems — build your operator leverage package</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="why">Why do you want in?</label>
+                    <textarea id="why" name="why" required placeholder="What are you building or trying to build? What would shipping this weekend mean for you?"></textarea>
+                </div>
+
+                <button type="submit" class="submit-button">Submit Application &rarr;</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <div class="footer-links">
+                <a href="#apply">Apply</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
