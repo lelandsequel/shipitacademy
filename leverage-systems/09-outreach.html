@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 09: Outreach — Ship OS | ShipItAcademy.com</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0A;
+            --bg-elevated: #111111;
+            --bg-card: #161616;
+            --border: #222222;
+            --text-primary: #EDEDED;
+            --text-secondary: #888888;
+            --text-tertiary: #555555;
+            --accent: #d4a853;
+            --accent-dim: rgba(212, 168, 83, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            font-size: 14px;
+            color: var(--accent);
+            margin: 32px 0 0;
+            font-weight: 600;
+        }
+
+        .track-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin: 40px 0 16px;
+        }
+
+        .track-a {
+            background: rgba(212, 168, 83, 0.12);
+            color: #d4a853;
+        }
+
+        .track-b {
+            background: rgba(0, 102, 255, 0.12);
+            color: #4d94ff;
+        }
+
+        .content {
+            padding: 0 0 80px;
+        }
+
+        .content h1 {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.15;
+            margin-bottom: 40px;
+        }
+
+        .content h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 48px 0 16px;
+        }
+
+        .content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin: 32px 0 12px;
+        }
+
+        .content h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 24px 0 8px;
+        }
+
+        .content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+            max-width: 680px;
+        }
+
+        .content ul, .content ol {
+            margin: 0 0 16px 24px;
+            color: var(--text-secondary);
+        }
+
+        .content li {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 6px;
+        }
+
+        .content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 16px 20px;
+            margin: 20px 0;
+            background: var(--bg-card);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .content blockquote p {
+            color: var(--text-primary);
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        .content pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .content pre code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: none;
+            padding: 0;
+        }
+
+        .content code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            background: var(--bg-card);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--accent);
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        .content th {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .content td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .content h1 {
+                font-size: 28px;
+            }
+
+            .content h2 {
+                font-size: 22px;
+            }
+
+            .content {
+                padding: 0 0 60px;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">Operator Foundry</a>
+            <a href="https://shipitacademy.com" class="nav-link">ShipItAcademy.com</a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="container">
+            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-b">Track B — Leverage Systems</span>
+            <h1>Module 09: Outreach</h1>
+            <h2>Leverage Systems Weekend — Sunday, 3:00 PM</h2>
+            <h2>Objective</h2>
+            <p>Write one outreach message to one real prospect using your new leverage positioning and proof. Not a template. Not a draft. A real message to a real person that you send before leaving this room.</p>
+            <h2>Duration</h2>
+            <p>90 minutes</p>
+            <h2>Facilitator Guide</h2>
+            <h3>Frame (10 min)</h3>
+            <blockquote><p>"You built a system. You have proof it works. You have positioning. Now you use it. One message. One real prospect. Before you leave today."</p>
+            </blockquote>
+            <p>This is not a marketing exercise. This is a single, personalized message to someone who could benefit from what you now offer.</p>
+            <h3>Outreach Principles</h3>
+            <ol>
+            <li><strong>Specific, not generic.</strong> Name the person. Reference their work. Show you know their problem.</li>
+            <li><strong>Value first, pitch second.</strong> Lead with insight or a sample of what you can do, not with "I'd love to chat."</li>
+            <li><strong>Proof included.</strong> Reference or attach your proof — before/after, time savings, sample output.</li>
+            <li><strong>Clear ask.</strong> One specific next step. Not "let me know your thoughts." Something like: "Can I send you a sample analysis of your [specific thing] this week?"</li>
+            <li><strong>Short.</strong> Under 150 words. Busy people don't read long messages.</li>
+            </ol>
+            <h3>Build Block (50 min)</h3>
+            <p><strong>Step 1: Select the Prospect (10 min)</strong></p>
+            <p>Participants identify one real person:</p>
+            <ul>
+            <li>Someone they know or have a connection to</li>
+            <li>Someone whose problem matches their positioning</li>
+            <li>Someone who would recognize the value of what they built</li>
+            </ul>
+            <p>Not a cold lead. Not a CEO you've never met. Someone you can reach and who would read your message.</p>
+            <p><strong>Step 2: Research (10 min)</strong></p>
+            <p>Spend 10 minutes learning about the prospect:</p>
+            <ul>
+            <li>What are they working on right now?</li>
+            <li>What problem do they likely have that your system solves?</li>
+            <li>What language do they use to describe their work?</li>
+            </ul>
+            <p><strong>Step 3: Write the Message (20 min)</strong></p>
+            <p>Use the template as a starting point, then customize:</p>
+            <ul>
+            <li>Open with a specific reference to their work</li>
+            <li>State the value you can provide</li>
+            <li>Include proof (metric, sample, or before/after)</li>
+            <li>Make a clear, specific ask</li>
+            <li>Keep it under 150 words</li>
+            </ul>
+            <p><strong>Step 4: Send (10 min)</strong></p>
+            <p>Review your message one final time. Then send it. Email, LinkedIn, DM — whatever channel you have access to.</p>
+            <blockquote><p>"If you're hesitating, that's normal. Send it anyway. The worst outcome is no response. The best outcome is a client."</p>
+            </blockquote>
+            <h3>Debrief (30 min)</h3>
+            <p>Each participant reads their message to the room (prospect name optional).</p>
+            <ul>
+            <li>Facilitator feedback: is the value clear? Is the proof compelling? Is the ask specific?</li>
+            <li>Group discussion: what felt hard about this? What would you change?</li>
+            <li>Reminder: follow up in 3-5 days if no response. One follow-up, not ten.</li>
+            </ul>
+            <h2>Participant Template</h2>
+            <h3>Prospect Selection</h3>
+            <p><strong>Name:</strong> ___</p>
+            <p><strong>Role/Company:</strong> ___</p>
+            <p><strong>Connection:</strong> ___ (how you know them or have access)</p>
+            <p><strong>Their likely problem:</strong> ___</p>
+            <p><strong>How your system addresses it:</strong> ___</p>
+            <p><strong>Channel:</strong> ___ (email / LinkedIn / DM / other)</p>
+            <h3>Message Draft</h3>
+            <pre><code>
+            [Specific reference to their work or situation]
+            
+            [Value statement: what you can do for them, stated as an outcome, not a feature]
+            
+            [Proof: one specific metric, sample, or comparison from your weekend build]
+            
+            [Clear ask: one specific next step]
+            
+            [Sign-off]
+            </code></pre>
+            <h3>Pre-Send Checklist</h3>
+            <ul>
+            <li>Message is under 150 words</li>
+            <li>Opens with something specific to the prospect (not generic)</li>
+            <li>Includes a concrete value statement</li>
+            <li>References proof (metric, sample, or comparison)</li>
+            <li>Ask is specific and easy to say yes to</li>
+            <li>No jargon the prospect wouldn't use</li>
+            <li>Proofread for typos</li>
+            <li>Channel confirmed (you have access)</li>
+            </ul>
+            <h3>Post-Send Record</h3>
+            <ul>
+            <li>Message sent: Yes / No</li>
+            <li>Channel: ___</li>
+            <li>Date/time sent: ___</li>
+            <li>Follow-up scheduled: ___ (3-5 days from send)</li>
+            </ul>
+            <h2>Artifact</h2>
+            <p>Each participant: one real outreach message sent to one real prospect.</p>
+            <h2>Weekend Complete</h2>
+            <p>You walked in as someone who uses AI. You're walking out as an operator — with a working leverage system, a value asset, positioning, proof, and your first outreach sent. That's leverage.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

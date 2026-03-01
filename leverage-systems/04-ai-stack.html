@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 04: AI Stack — Ship OS | ShipItAcademy.com</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0A;
+            --bg-elevated: #111111;
+            --bg-card: #161616;
+            --border: #222222;
+            --text-primary: #EDEDED;
+            --text-secondary: #888888;
+            --text-tertiary: #555555;
+            --accent: #d4a853;
+            --accent-dim: rgba(212, 168, 83, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            font-size: 14px;
+            color: var(--accent);
+            margin: 32px 0 0;
+            font-weight: 600;
+        }
+
+        .track-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin: 40px 0 16px;
+        }
+
+        .track-a {
+            background: rgba(212, 168, 83, 0.12);
+            color: #d4a853;
+        }
+
+        .track-b {
+            background: rgba(0, 102, 255, 0.12);
+            color: #4d94ff;
+        }
+
+        .content {
+            padding: 0 0 80px;
+        }
+
+        .content h1 {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.15;
+            margin-bottom: 40px;
+        }
+
+        .content h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 48px 0 16px;
+        }
+
+        .content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin: 32px 0 12px;
+        }
+
+        .content h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 24px 0 8px;
+        }
+
+        .content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+            max-width: 680px;
+        }
+
+        .content ul, .content ol {
+            margin: 0 0 16px 24px;
+            color: var(--text-secondary);
+        }
+
+        .content li {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 6px;
+        }
+
+        .content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 16px 20px;
+            margin: 20px 0;
+            background: var(--bg-card);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .content blockquote p {
+            color: var(--text-primary);
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        .content pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .content pre code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: none;
+            padding: 0;
+        }
+
+        .content code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            background: var(--bg-card);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--accent);
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        .content th {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .content td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .content h1 {
+                font-size: 28px;
+            }
+
+            .content h2 {
+                font-size: 22px;
+            }
+
+            .content {
+                padding: 0 0 60px;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">Operator Foundry</a>
+            <a href="https://shipitacademy.com" class="nav-link">ShipItAcademy.com</a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="container">
+            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-b">Track B — Leverage Systems</span>
+            <h1>Module 04: AI Stack</h1>
+            <h2>Leverage Systems Weekend — Saturday, 1:00 PM</h2>
+            <h2>Objective</h2>
+            <p>Design the AI stack for your leverage system: which models, which tools, how they connect, and how the orchestration works. This is the technical design that turns your thesis into a buildable system.</p>
+            <h2>Duration</h2>
+            <p>90 minutes</p>
+            <h2>Facilitator Guide</h2>
+            <h3>Frame (10 min)</h3>
+            <blockquote><p>"You have a thesis. Now you design the system that proves it. An AI stack is three layers: models (what thinks), tools (what acts), and orchestration (what coordinates). By the end of this module, you'll know exactly what you're building."</p>
+            </blockquote>
+            <h3>The Three Layers</h3>
+            <p><strong>Layer 1: Models</strong></p>
+            <ul>
+            <li>Which LLM(s) are you using?</li>
+            <li>What tasks does each model handle?</li>
+            <li>What quality/speed/cost tradeoffs are you making?</li>
+            <li>API or local?</li>
+            </ul>
+            <p><strong>Layer 2: Tools</strong></p>
+            <ul>
+            <li>What external services, APIs, or data sources does the system use?</li>
+            <li>What file/data operations are needed?</li>
+            <li>What integrations connect to existing workflow?</li>
+            </ul>
+            <p><strong>Layer 3: Orchestration</strong></p>
+            <ul>
+            <li>How do the models and tools connect?</li>
+            <li>What's the sequence of operations?</li>
+            <li>Where does the human enter the loop?</li>
+            <li>What triggers the workflow? (Manual, scheduled, event-driven)</li>
+            </ul>
+            <h3>Build Block (70 min)</h3>
+            <p><strong>Step 1: Model Selection (15 min)</strong></p>
+            <p>Participants choose models based on their task requirements:</p>
+            <table><thead><tr>
+            <th>Consideration</th>
+            <th>Options</th>
+            </tr></thead><tbody>
+            <tr>
+            <td>Complex reasoning</td>
+            <td>Claude, GPT-4 class</td>
+            </tr>
+            <tr>
+            <td>Fast, simple tasks</td>
+            <td>Claude Haiku, GPT-4o-mini</td>
+            </tr>
+            <tr>
+            <td>Structured output</td>
+            <td>Any model with JSON mode</td>
+            </tr>
+            <tr>
+            <td>Code generation</td>
+            <td>Claude, GPT-4 class</td>
+            </tr>
+            <tr>
+            <td>Embeddings/search</td>
+            <td>Voyage, OpenAI embeddings</td>
+            </tr>
+            <tr>
+            <td>Vision/multimodal</td>
+            <td>Claude, GPT-4V</td>
+            </tr>
+            </tbody></table>
+            <p><strong>Step 2: Tool Inventory (20 min)</strong></p>
+            <p>List every tool the system needs:</p>
+            <ul>
+            <li>Data sources (APIs, databases, files)</li>
+            <li>Processing tools (parsers, formatters, validators)</li>
+            <li>Output tools (file writers, email senders, API calls)</li>
+            <li>Integration tools (Slack, Notion, Google Docs, CRM)</li>
+            </ul>
+            <p><strong>Step 3: Orchestration Design (35 min)</strong></p>
+            <p>Draw the flow:</p>
+            <ol>
+            <li>What triggers the workflow?</li>
+            <li>What's the first step?</li>
+            <li>How does data flow between steps?</li>
+            <li>Where does a human review or approve?</li>
+            <li>What's the final output?</li>
+            </ol>
+            <h3>Review (10 min)</h3>
+            <p>Each participant explains their stack in 2 minutes:</p>
+            <ul>
+            <li>"I'm using [model] for [task], [tool] for [task], orchestrated by [method]."</li>
+            <li>Facilitator checks: is this buildable in the next module? If the stack is too complex, simplify.</li>
+            </ul>
+            <h2>Participant Template</h2>
+            <h3>AI Stack Design</h3>
+            <p><strong>System Name:</strong> ___</p>
+            <p><strong>Models:</strong></p>
+            <table><thead><tr>
+            <th>Model</th>
+            <th>Task</th>
+            <th>Why This Model</th>
+            </tr></thead><tbody>
+            </tbody></table>
+            <p><strong>Tools:</strong></p>
+            <table><thead><tr>
+            <th>Tool/API</th>
+            <th>Purpose</th>
+            <th>Auth/Setup Required</th>
+            </tr></thead><tbody>
+            </tbody></table>
+            <p><strong>Orchestration Flow:</strong></p>
+            <pre><code>
+            [Trigger] --&gt; [Step 1: ___] --&gt; [Step 2: ___] --&gt; [Step 3: ___] --&gt; [Output]
+                              |                                    ^
+                              v                                    |
+                        [Human Review] ------- approve ---------&gt; +
+            </code></pre>
+            <p><strong>Step-by-Step Flow:</strong></p>
+            <ol>
+            <li>Trigger: ___</li>
+            <li>Step 1: ___ (model/tool: ___)</li>
+            <li>Step 2: ___ (model/tool: ___)</li>
+            <li>Step 3: ___ (model/tool: ___)</li>
+            <li>Human checkpoint (if applicable): ___</li>
+            <li>Output: ___</li>
+            </ol>
+            <p><strong>Orchestration Method:</strong></p>
+            <ul>
+            <li>Script (Python/Node sequential execution)</li>
+            <li>Agent framework (LangChain, CrewAI, custom)</li>
+            <li>Workflow tool (Make, Zapier, n8n)</li>
+            <li>Custom orchestrator</li>
+            </ul>
+            <p><strong>Environment Requirements:</strong></p>
+            <ul>
+            <li>API keys needed: ___</li>
+            <li>Accounts needed: ___</li>
+            <li>Data access needed: ___</li>
+            </ul>
+            <h2>Artifact</h2>
+            <p>Each participant commits: <code>docs/ai-stack.md</code> with model, tool, and orchestration decisions documented.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 06: Add Eval — Ship OS | ShipItAcademy.com</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0A;
+            --bg-elevated: #111111;
+            --bg-card: #161616;
+            --border: #222222;
+            --text-primary: #EDEDED;
+            --text-secondary: #888888;
+            --text-tertiary: #555555;
+            --accent: #d4a853;
+            --accent-dim: rgba(212, 168, 83, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            font-size: 14px;
+            color: var(--accent);
+            margin: 32px 0 0;
+            font-weight: 600;
+        }
+
+        .track-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin: 40px 0 16px;
+        }
+
+        .track-a {
+            background: rgba(212, 168, 83, 0.12);
+            color: #d4a853;
+        }
+
+        .track-b {
+            background: rgba(0, 102, 255, 0.12);
+            color: #4d94ff;
+        }
+
+        .content {
+            padding: 0 0 80px;
+        }
+
+        .content h1 {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.15;
+            margin-bottom: 40px;
+        }
+
+        .content h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 48px 0 16px;
+        }
+
+        .content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin: 32px 0 12px;
+        }
+
+        .content h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 24px 0 8px;
+        }
+
+        .content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+            max-width: 680px;
+        }
+
+        .content ul, .content ol {
+            margin: 0 0 16px 24px;
+            color: var(--text-secondary);
+        }
+
+        .content li {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 6px;
+        }
+
+        .content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 16px 20px;
+            margin: 20px 0;
+            background: var(--bg-card);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .content blockquote p {
+            color: var(--text-primary);
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        .content pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .content pre code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: none;
+            padding: 0;
+        }
+
+        .content code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            background: var(--bg-card);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--accent);
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        .content th {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .content td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .content h1 {
+                font-size: 28px;
+            }
+
+            .content h2 {
+                font-size: 22px;
+            }
+
+            .content {
+                padding: 0 0 60px;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">Operator Foundry</a>
+            <a href="https://shipitacademy.com" class="nav-link">ShipItAcademy.com</a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="container">
+            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-a">Track A — Ship Systems</span>
+            <h1>Module 06: Add Eval</h1>
+            <h2>Ship Systems Weekend — Sunday, 9:00 AM</h2>
+            <h2>Objective</h2>
+            <p>Add evaluation to your system: test cases, pass/fail criteria, and automated checks. A system without eval is a toy. A system with eval is infrastructure.</p>
+            <h2>Duration</h2>
+            <p>90 minutes</p>
+            <h2>Facilitator Guide</h2>
+            <h3>Frame (10 min)</h3>
+            <blockquote><p>"Yesterday you built a system that works. Today you prove it works. Eval is what separates a weekend hack from a real system. If you can't test it, you can't trust it, and you can't improve it."</p>
+            </blockquote>
+            <p>Three levels of eval:</p>
+            <ol>
+            <li><strong>Functional tests</strong> — does the system produce output in the correct format?</li>
+            <li><strong>Quality tests</strong> — is the output good? Does it meet the success criteria from Module 02?</li>
+            <li><strong>Regression tests</strong> — when you change something, does the system still work?</li>
+            </ol>
+            <p>For this weekend, participants build levels 1 and 2. Level 3 comes naturally from having 1 and 2.</p>
+            <h3>Build Block (70 min)</h3>
+            <p><strong>Step 1: Define Test Cases (20 min)</strong></p>
+            <p>Participants write 3-5 test cases:</p>
+            <ul>
+            <li>2 "happy path" cases — standard inputs that should produce correct output</li>
+            <li>1 "edge case" — unusual but valid input</li>
+            <li>1 "failure case" — invalid input that should be handled gracefully</li>
+            <li>1 "quality case" — input where you evaluate output quality, not just format</li>
+            </ul>
+            <p><strong>Step 2: Write Pass/Fail Criteria (15 min)</strong></p>
+            <p>For each test case, define:</p>
+            <ul>
+            <li>What "pass" looks like (specific, measurable)</li>
+            <li>What "fail" looks like</li>
+            <li>Any partial credit criteria (for quality tests)</li>
+            </ul>
+            <p><strong>Step 3: Implement Automated Checks (35 min)</strong></p>
+            <p>Create a test file that:</p>
+            <ul>
+            <li>Runs each test case through the system</li>
+            <li>Checks output against pass/fail criteria</li>
+            <li>Reports results: passed, failed, or error</li>
+            <li>Can be run with a single command (<code>npm test</code>, <code>pytest</code>, or a custom script)</li>
+            </ul>
+            <h3>Review (10 min)</h3>
+            <p>Each participant runs their test suite. Report:</p>
+            <ul>
+            <li>How many tests pass?</li>
+            <li>Which tests fail? Why?</li>
+            <li>What would you add with more time?</li>
+            </ul>
+            <h2>Participant Template</h2>
+            <h3>Test Case Template</h3>
+            <pre><code>
+            ## Test Case: [Name]
+            
+            **Input:**
+            [Exact input to provide to the system]
+            
+            **Expected Output:**
+            [What the system should produce — be specific about format and content]
+            
+            **Pass Criteria:**
+            - [ ] Output is in correct format
+            - [ ] Output contains [specific element]
+            - [ ] Output does not contain [specific anti-pattern]
+            
+            **Type:** happy-path | edge-case | failure | quality
+            </code></pre>
+            <h3>Eval Script Structure</h3>
+            <pre><code>
+            tests/
+              eval.{ts,py}           # Main eval runner
+              cases/
+                case-01-happy.json    # Test case data
+                case-02-happy.json
+                case-03-edge.json
+                case-04-failure.json
+                case-05-quality.json
+            </code></pre>
+            <h3>Minimum Eval Requirements</h3>
+            <ul>
+            <li>3+ test cases defined with inputs and expected outputs</li>
+            <li>Pass/fail criteria written for each case</li>
+            <li>Automated eval script that runs all cases</li>
+            <li>Script reports pass/fail per case</li>
+            <li>Script exits with non-zero code if any test fails</li>
+            <li>All tests can be run with a single command</li>
+            </ul>
+            <h2>Artifact</h2>
+            <p>Each participant commits: test cases, eval criteria, and automated eval script.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

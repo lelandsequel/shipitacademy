@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 03: Design Spec — Ship OS | ShipItAcademy.com</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0A;
+            --bg-elevated: #111111;
+            --bg-card: #161616;
+            --border: #222222;
+            --text-primary: #EDEDED;
+            --text-secondary: #888888;
+            --text-tertiary: #555555;
+            --accent: #d4a853;
+            --accent-dim: rgba(212, 168, 83, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            font-size: 14px;
+            color: var(--accent);
+            margin: 32px 0 0;
+            font-weight: 600;
+        }
+
+        .track-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin: 40px 0 16px;
+        }
+
+        .track-a {
+            background: rgba(212, 168, 83, 0.12);
+            color: #d4a853;
+        }
+
+        .track-b {
+            background: rgba(0, 102, 255, 0.12);
+            color: #4d94ff;
+        }
+
+        .content {
+            padding: 0 0 80px;
+        }
+
+        .content h1 {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.15;
+            margin-bottom: 40px;
+        }
+
+        .content h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 48px 0 16px;
+        }
+
+        .content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin: 32px 0 12px;
+        }
+
+        .content h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 24px 0 8px;
+        }
+
+        .content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+            max-width: 680px;
+        }
+
+        .content ul, .content ol {
+            margin: 0 0 16px 24px;
+            color: var(--text-secondary);
+        }
+
+        .content li {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 6px;
+        }
+
+        .content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 16px 20px;
+            margin: 20px 0;
+            background: var(--bg-card);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .content blockquote p {
+            color: var(--text-primary);
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        .content pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .content pre code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: none;
+            padding: 0;
+        }
+
+        .content code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            background: var(--bg-card);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--accent);
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        .content th {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .content td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .content h1 {
+                font-size: 28px;
+            }
+
+            .content h2 {
+                font-size: 22px;
+            }
+
+            .content {
+                padding: 0 0 60px;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">Operator Foundry</a>
+            <a href="https://shipitacademy.com" class="nav-link">ShipItAcademy.com</a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="container">
+            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-a">Track A — Ship Systems</span>
+            <h1>Module 03: Design Spec</h1>
+            <h2>Ship Systems Weekend — Saturday, 11:00 AM</h2>
+            <h2>Objective</h2>
+            <p>Translate the system definition into a technical specification: architecture diagram, data flow, agent roles, and tool list. This is the blueprint you build from.</p>
+            <h2>Duration</h2>
+            <p>90 minutes (including lunch overlap — participants can eat while designing)</p>
+            <h2>Facilitator Guide</h2>
+            <h3>Frame (10 min)</h3>
+            <blockquote><p>"You now know what your system does. This module is about how it does it. By the end, you'll have a spec that another engineer could pick up and build from."</p>
+            </blockquote>
+            <p>Walk through the four components of a spec:</p>
+            <ol>
+            <li><strong>Architecture diagram</strong> — boxes and arrows. What are the components? How do they connect?</li>
+            <li><strong>Data flow</strong> — what data moves where? What transformations happen?</li>
+            <li><strong>Agent roles</strong> — if your system has agents, what does each one do? What are its boundaries?</li>
+            <li><strong>Tool list</strong> — what external tools, APIs, or services does each agent/component use?</li>
+            </ol>
+            <h3>Build Block (60 min)</h3>
+            <p>Participants fill out the spec template. Encourage hand-drawn architecture diagrams first — paper beats software for speed.</p>
+            <p>Common failure modes to watch for:</p>
+            <ul>
+            <li><strong>Over-architecting</strong>: three agents when one will do. Push for the simplest design that works.</li>
+            <li><strong>Missing data flow</strong>: they know the components but can't explain how data moves between them.</li>
+            <li><strong>Vague tool list</strong>: "uses an LLM" — which model? Which API? What parameters?</li>
+            </ul>
+            <h3>Pair Review (20 min)</h3>
+            <p>Pair participants. Each person explains their spec to their partner in 5 minutes. Partner asks:</p>
+            <ul>
+            <li>"Where does [X input] go first?"</li>
+            <li>"What happens if [Y step] fails?"</li>
+            <li>"Which agent handles [Z task]?"</li>
+            </ul>
+            <p>If the builder can't answer clearly, the spec needs work.</p>
+            <h2>Participant Template</h2>
+            <h3>Architecture Spec</h3>
+            <p><strong>System Name:</strong> ___</p>
+            <p><strong>Architecture Diagram:</strong></p>
+            <p>_Draw or describe the components and their connections. Use ASCII, a photo of a whiteboard sketch, or a simple diagram tool._</p>
+            <pre><code>
+            [Component A] ---&gt; [Component B] ---&gt; [Output]
+                  |                  ^
+                  v                  |
+            [Component C] -----------+
+            </code></pre>
+            <p><strong>Components:</strong></p>
+            <table><thead><tr>
+            <th>Component</th>
+            <th>Responsibility</th>
+            <th>Technology</th>
+            </tr></thead><tbody>
+            </tbody></table>
+            <p><strong>Data Flow:</strong></p>
+            <ol>
+            <li>User provides [input] via [method]</li>
+            <li>[Component A] receives input and [action]</li>
+            <li>[Component A] sends [data] to [Component B]</li>
+            <li>[Component B] [processes/transforms] and produces [output]</li>
+            <li>[Output] is returned to user via [method]</li>
+            </ol>
+            <p><strong>Agent Roles</strong> (if applicable):</p>
+            <table><thead><tr>
+            <th>Agent</th>
+            <th>Role</th>
+            <th>Tools</th>
+            <th>Boundaries</th>
+            </tr></thead><tbody>
+            </tbody></table>
+            <p><strong>Tool & API List:</strong></p>
+            <table><thead><tr>
+            <th>Tool/API</th>
+            <th>Purpose</th>
+            <th>Auth Required</th>
+            <th>Cost</th>
+            </tr></thead><tbody>
+            </tbody></table>
+            <p><strong>Key Decisions:</strong></p>
+            <p>_List 2-3 architectural decisions you made and why._</p>
+            <ol>
+            <li>___</li>
+            <li>___</li>
+            <li>___</li>
+            </ol>
+            <h2>Artifact</h2>
+            <p>Each participant commits: <code>docs/architecture-spec.md</code> to their repo.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

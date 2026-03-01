@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 08: Proof — Ship OS | ShipItAcademy.com</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0A;
+            --bg-elevated: #111111;
+            --bg-card: #161616;
+            --border: #222222;
+            --text-primary: #EDEDED;
+            --text-secondary: #888888;
+            --text-tertiary: #555555;
+            --accent: #d4a853;
+            --accent-dim: rgba(212, 168, 83, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            font-size: 14px;
+            color: var(--accent);
+            margin: 32px 0 0;
+            font-weight: 600;
+        }
+
+        .track-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin: 40px 0 16px;
+        }
+
+        .track-a {
+            background: rgba(212, 168, 83, 0.12);
+            color: #d4a853;
+        }
+
+        .track-b {
+            background: rgba(0, 102, 255, 0.12);
+            color: #4d94ff;
+        }
+
+        .content {
+            padding: 0 0 80px;
+        }
+
+        .content h1 {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.15;
+            margin-bottom: 40px;
+        }
+
+        .content h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 48px 0 16px;
+        }
+
+        .content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin: 32px 0 12px;
+        }
+
+        .content h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 24px 0 8px;
+        }
+
+        .content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+            max-width: 680px;
+        }
+
+        .content ul, .content ol {
+            margin: 0 0 16px 24px;
+            color: var(--text-secondary);
+        }
+
+        .content li {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 6px;
+        }
+
+        .content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 16px 20px;
+            margin: 20px 0;
+            background: var(--bg-card);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .content blockquote p {
+            color: var(--text-primary);
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        .content pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .content pre code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: none;
+            padding: 0;
+        }
+
+        .content code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            background: var(--bg-card);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--accent);
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        .content th {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .content td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .content h1 {
+                font-size: 28px;
+            }
+
+            .content h2 {
+                font-size: 22px;
+            }
+
+            .content {
+                padding: 0 0 60px;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">Operator Foundry</a>
+            <a href="https://shipitacademy.com" class="nav-link">ShipItAcademy.com</a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="container">
+            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-b">Track B — Leverage Systems</span>
+            <h1>Module 08: Proof</h1>
+            <h2>Leverage Systems Weekend — Sunday, 1:00 PM</h2>
+            <h2>Objective</h2>
+            <p>Capture proof that your leverage system works: before/after comparison, time saved, and output quality assessment. Proof is what makes your positioning credible and your outreach effective.</p>
+            <h2>Duration</h2>
+            <p>90 minutes</p>
+            <h2>Facilitator Guide</h2>
+            <h3>Frame (10 min)</h3>
+            <blockquote><p>"Anyone can claim they work faster with AI. Proof is what separates a claim from a capability. This module produces the evidence that your leverage system delivers real results."</p>
+            </blockquote>
+            <h3>Three Types of Proof</h3>
+            <ol>
+            <li><strong>Before/After</strong> — Same task, done manually vs. done with your system. Side-by-side comparison.</li>
+            <li><strong>Time Proof</strong> — Measured time to complete a task with your system vs. estimated manual time.</li>
+            <li><strong>Quality Proof</strong> — Output quality comparison: is the AI-assisted output as good or better?</li>
+            </ol>
+            <p>You need all three. Not one. All three.</p>
+            <h3>Build Block (70 min)</h3>
+            <p><strong>Step 1: Before/After Comparison (25 min)</strong></p>
+            <p>Select one task you've done manually before. Produce the output both ways:</p>
+            <ul>
+            <li><strong>Before</strong>: the manual output (use a past example from your actual work)</li>
+            <li><strong>After</strong>: run the same task through your leverage system</li>
+            </ul>
+            <p>Document side-by-side:</p>
+            <ul>
+            <li>What does the manual version look like?</li>
+            <li>What does the system version look like?</li>
+            <li>What's the same? What's different? What's better? What's worse?</li>
+            </ul>
+            <p><strong>Step 2: Time Measurement (20 min)</strong></p>
+            <p>Run your pipeline with a new input. Time it precisely:</p>
+            <ul>
+            <li>Time from input to output (system): ___ minutes</li>
+            <li>Estimated time for manual equivalent: ___ hours</li>
+            <li>Leverage ratio: ___x</li>
+            </ul>
+            <p>Be honest. If the system takes 20 minutes of human setup + 5 minutes of processing, the real time is 25 minutes, not 5.</p>
+            <p><strong>Step 3: Quality Assessment (25 min)</strong></p>
+            <p>Evaluate the system output against professional standards:</p>
+            <ul>
+            <li>Would a client accept this as-is?</li>
+            <li>What human review/editing is needed?</li>
+            <li>Rate output quality: 1-10 compared to manual output</li>
+            <li>Identify quality gaps and note what would fix them</li>
+            </ul>
+            <h3>Review (10 min)</h3>
+            <p>Each participant presents their proof:</p>
+            <ul>
+            <li>Before/after side-by-side</li>
+            <li>Time comparison</li>
+            <li>Quality rating</li>
+            </ul>
+            <p>Facilitator challenge: "Would a skeptical prospect believe this proof?"</p>
+            <h2>Participant Template</h2>
+            <h3>Before/After Comparison</h3>
+            <p><strong>Task:</strong> ___</p>
+            <p><strong>Manual (Before):</strong></p>
+            <p>_Describe or attach the manual output_</p>
+            <ul>
+            <li>Time to produce: ___</li>
+            <li>Quality (self-assessed 1-10): ___</li>
+            </ul>
+            <p><strong>System (After):</strong></p>
+            <p>_Describe or attach the system output_</p>
+            <ul>
+            <li>Time to produce: ___</li>
+            <li>Quality (self-assessed 1-10): ___</li>
+            </ul>
+            <p><strong>Comparison:</strong></p>
+            <ul>
+            <li>What's the same: ___</li>
+            <li>What's better in the system version: ___</li>
+            <li>What's better in the manual version: ___</li>
+            <li>Net assessment: ___</li>
+            </ul>
+            <h3>Time Proof</h3>
+            <table><thead><tr>
+            <th>Metric</th>
+            <th>Manual</th>
+            <th>System</th>
+            <th>Ratio</th>
+            </tr></thead><tbody>
+            <tr>
+            <td>Total time</td>
+            <td>___ hrs</td>
+            <td>___ min</td>
+            <td>___x</td>
+            </tr>
+            <tr>
+            <td>Human time (active)</td>
+            <td>___ hrs</td>
+            <td>___ min</td>
+            <td>___x</td>
+            </tr>
+            <tr>
+            <td>Wait/processing time</td>
+            <td>N/A</td>
+            <td>___ min</td>
+            <td>—</td>
+            </tr>
+            </tbody></table>
+            <h3>Quality Assessment</h3>
+            <table><thead><tr>
+            <th>Dimension</th>
+            <th>Manual (1-10)</th>
+            <th>System (1-10)</th>
+            <th>Notes</th>
+            </tr></thead><tbody>
+            <tr>
+            <td>Accuracy</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            </tr>
+            <tr>
+            <td>Completeness</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            </tr>
+            <tr>
+            <td>Formatting</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            </tr>
+            <tr>
+            <td>Actionability</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            </tr>
+            <tr>
+            <td>Overall</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            </tr>
+            </tbody></table>
+            <p><strong>Human review needed:</strong> Yes / No</p>
+            <p><strong>Review time:</strong> ___ min</p>
+            <p><strong>Quality gaps to address:</strong> ___</p>
+            <h3>Proof Summary</h3>
+            <p>_Two sentences summarizing your leverage proof:_</p>
+            <blockquote><p>"My system produces [output] in [time] compared to [manual time] — a [X]x improvement. Output quality is [assessment], with [minimal/some/significant] human review needed."</p>
+            </blockquote>
+            <h2>Artifact</h2>
+            <p>Each participant commits: <code>docs/proof.md</code> with before/after, time measurement, and quality assessment.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

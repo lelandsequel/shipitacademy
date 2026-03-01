@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 07: Positioning — Ship OS | ShipItAcademy.com</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0A;
+            --bg-elevated: #111111;
+            --bg-card: #161616;
+            --border: #222222;
+            --text-primary: #EDEDED;
+            --text-secondary: #888888;
+            --text-tertiary: #555555;
+            --accent: #d4a853;
+            --accent-dim: rgba(212, 168, 83, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            font-size: 14px;
+            color: var(--accent);
+            margin: 32px 0 0;
+            font-weight: 600;
+        }
+
+        .track-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin: 40px 0 16px;
+        }
+
+        .track-a {
+            background: rgba(212, 168, 83, 0.12);
+            color: #d4a853;
+        }
+
+        .track-b {
+            background: rgba(0, 102, 255, 0.12);
+            color: #4d94ff;
+        }
+
+        .content {
+            padding: 0 0 80px;
+        }
+
+        .content h1 {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.15;
+            margin-bottom: 40px;
+        }
+
+        .content h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 48px 0 16px;
+        }
+
+        .content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin: 32px 0 12px;
+        }
+
+        .content h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 24px 0 8px;
+        }
+
+        .content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+            max-width: 680px;
+        }
+
+        .content ul, .content ol {
+            margin: 0 0 16px 24px;
+            color: var(--text-secondary);
+        }
+
+        .content li {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 6px;
+        }
+
+        .content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 16px 20px;
+            margin: 20px 0;
+            background: var(--bg-card);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .content blockquote p {
+            color: var(--text-primary);
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        .content pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .content pre code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: none;
+            padding: 0;
+        }
+
+        .content code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            background: var(--bg-card);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--accent);
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        .content th {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .content td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .content h1 {
+                font-size: 28px;
+            }
+
+            .content h2 {
+                font-size: 22px;
+            }
+
+            .content {
+                padding: 0 0 60px;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">Operator Foundry</a>
+            <a href="https://shipitacademy.com" class="nav-link">ShipItAcademy.com</a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="container">
+            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-b">Track B — Leverage Systems</span>
+            <h1>Module 07: Positioning</h1>
+            <h2>Leverage Systems Weekend — Sunday, 10:30 AM</h2>
+            <h2>Objective</h2>
+            <p>Write your positioning: what you now offer, who it's for, and why it's different. Your leverage system changes what you can deliver — this module makes that change explicit and communicable.</p>
+            <h2>Duration</h2>
+            <p>90 minutes</p>
+            <h2>Facilitator Guide</h2>
+            <h3>Frame (10 min)</h3>
+            <blockquote><p>"You built a system. You produced a value asset. Now you need to articulate what changed. Positioning isn't marketing — it's clarity. When someone asks 'what do you do?', your answer should be different after this weekend than it was before."</p>
+            </blockquote>
+            <h3>The Positioning Framework</h3>
+            <p>Four components:</p>
+            <ol>
+            <li><strong>What you offer</strong> — the service, capability, or deliverable (not the AI system — the outcome it enables)</li>
+            <li><strong>Who it's for</strong> — specific audience, not "everyone"</li>
+            <li><strong>Why it's different</strong> — what you can now do that others can't (speed, quality, depth, scale)</li>
+            <li><strong>Proof</strong> — evidence that it works (you'll build this in Module 08)</li>
+            </ol>
+            <h3>Build Block (60 min)</h3>
+            <p><strong>Step 1: Positioning Statement (20 min)</strong></p>
+            <p>Write one paragraph:</p>
+            <blockquote><p>"I help [specific audience] [achieve specific outcome] by [method/approach]. Unlike [alternative], I [key differentiator] because [reason/capability]."</p>
+            </blockquote>
+            <p>Facilitator pushes on:</p>
+            <ul>
+            <li><strong>Generic audience</strong>: "businesses" is not an audience. "B2B SaaS companies with 10-50 employees who need weekly content" is.</li>
+            <li><strong>Vague differentiator</strong>: "I use AI" is not different. Everyone uses AI. "I deliver a complete competitive analysis in 2 hours instead of 2 weeks" is different.</li>
+            <li><strong>Feature-focus</strong>: Don't describe your tools. Describe the outcome your client gets.</li>
+            </ul>
+            <p><strong>Step 2: Offer Description (20 min)</strong></p>
+            <p>Expand the positioning into a concrete offer:</p>
+            <ul>
+            <li>What the client gets (deliverables)</li>
+            <li>How it's delivered (format, timeline)</li>
+            <li>What the client does vs. what you do</li>
+            <li>Price anchor (what this would cost from a traditional provider)</li>
+            </ul>
+            <p><strong>Step 3: One-Liner (20 min)</strong></p>
+            <p>Compress everything into a single sentence you can say in conversation:</p>
+            <blockquote><p>"[Outcome] for [audience] in [timeframe]."</p>
+            </blockquote>
+            <p>Examples:</p>
+            <ul>
+            <li>"Complete competitor intelligence reports for SaaS founders in 48 hours."</li>
+            <li>"Full content calendars with drafted posts for e-commerce brands, weekly."</li>
+            <li>"Technical due diligence summaries for VC partners in 24 hours."</li>
+            </ul>
+            <h3>Review (20 min)</h3>
+            <p>Each participant reads their one-liner and positioning statement.</p>
+            <ul>
+            <li>Room votes: is the audience clear? Is the differentiator real? Would you buy this?</li>
+            </ul>
+            <h2>Participant Template</h2>
+            <h3>Positioning Statement</h3>
+            <blockquote><p>"I help [___] [___] by [___]. Unlike [___], I [___] because [___]."</p>
+            </blockquote>
+            <h3>Offer Description</h3>
+            <p><strong>Service:</strong> ___</p>
+            <p><strong>Deliverables:</strong></p>
+            <ul>
+            <li>___</li>
+            <li>___</li>
+            <li>___</li>
+            </ul>
+            <p><strong>Delivery format:</strong> ___</p>
+            <p><strong>Turnaround time:</strong> ___</p>
+            <p><strong>Client responsibilities:</strong></p>
+            <ul>
+            <li>___</li>
+            </ul>
+            <p><strong>My responsibilities:</strong></p>
+            <ul>
+            <li>___</li>
+            </ul>
+            <p><strong>Traditional alternative:</strong> ___</p>
+            <p><strong>Traditional cost/timeline:</strong> ___</p>
+            <p><strong>My cost/timeline advantage:</strong> ___</p>
+            <h3>One-Liner</h3>
+            <blockquote><p>"___"</p>
+            </blockquote>
+            <h3>Positioning Checklist</h3>
+            <ul>
+            <li>Audience is specific (not "anyone" or "businesses")</li>
+            <li>Outcome is concrete (not "help with" or "improve")</li>
+            <li>Differentiator is real and defensible</li>
+            <li>Offer description includes specific deliverables</li>
+            <li>One-liner is under 15 words</li>
+            <li>You can say the one-liner out loud without cringing</li>
+            </ul>
+            <h2>Artifact</h2>
+            <p>Each participant commits: <code>docs/positioning.md</code> with positioning statement, offer description, and one-liner.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

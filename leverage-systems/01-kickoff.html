@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 01: Kickoff — Ship OS | ShipItAcademy.com</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0A;
+            --bg-elevated: #111111;
+            --bg-card: #161616;
+            --border: #222222;
+            --text-primary: #EDEDED;
+            --text-secondary: #888888;
+            --text-tertiary: #555555;
+            --accent: #d4a853;
+            --accent-dim: rgba(212, 168, 83, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            font-size: 14px;
+            color: var(--accent);
+            margin: 32px 0 0;
+            font-weight: 600;
+        }
+
+        .track-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin: 40px 0 16px;
+        }
+
+        .track-a {
+            background: rgba(212, 168, 83, 0.12);
+            color: #d4a853;
+        }
+
+        .track-b {
+            background: rgba(0, 102, 255, 0.12);
+            color: #4d94ff;
+        }
+
+        .content {
+            padding: 0 0 80px;
+        }
+
+        .content h1 {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.15;
+            margin-bottom: 40px;
+        }
+
+        .content h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 48px 0 16px;
+        }
+
+        .content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin: 32px 0 12px;
+        }
+
+        .content h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 24px 0 8px;
+        }
+
+        .content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+            max-width: 680px;
+        }
+
+        .content ul, .content ol {
+            margin: 0 0 16px 24px;
+            color: var(--text-secondary);
+        }
+
+        .content li {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 6px;
+        }
+
+        .content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 16px 20px;
+            margin: 20px 0;
+            background: var(--bg-card);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .content blockquote p {
+            color: var(--text-primary);
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        .content pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .content pre code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: none;
+            padding: 0;
+        }
+
+        .content code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            background: var(--bg-card);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--accent);
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        .content th {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .content td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .content h1 {
+                font-size: 28px;
+            }
+
+            .content h2 {
+                font-size: 22px;
+            }
+
+            .content {
+                padding: 0 0 60px;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">Operator Foundry</a>
+            <a href="https://shipitacademy.com" class="nav-link">ShipItAcademy.com</a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="container">
+            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-b">Track B — Leverage Systems</span>
+            <h1>Module 01: Kickoff</h1>
+            <h2>Leverage Systems Weekend — Saturday, 9:00 AM</h2>
+            <h2>Facilitator Guide</h2>
+            <h3>Objective</h3>
+            <p>Frame the leverage model. Introduce operator thinking. Every participant leaves Sunday with a complete leverage package — not theory, not a plan, a working system with proof and positioning.</p>
+            <h3>Setup (before participants arrive)</h3>
+            <ul>
+            <li>Room: power strips, projector, Wi-Fi credentials posted</li>
+            <li>Confirm each participant has access to their tools, accounts, and workspace</li>
+            <li>Print setup checklist as backup</li>
+            </ul>
+            <h3>Opening (15 min)</h3>
+            <ol>
+            <li>State the mission:</li>
+            <blockquote><p>"You are here to build an operator leverage package. By Sunday evening, you'll have a working system that multiplies your output, proof that it works, positioning that explains what you now offer, and one real outreach message sent to a real prospect."</p>
+            </blockquote>
+            <li>Introduce yourself. Credentials only.</li>
+            <li>Define "operator" for this weekend:</li>
+            <blockquote><p>"An operator is someone who uses AI systems to multiply their output — not as a novelty, but as infrastructure. You don't just use AI. You build leverage with it."</p>
+            </ol>
+            </blockquote>
+            <h3>Operator vs. User (10 min)</h3>
+            <p>Draw the distinction:</p>
+            <ul>
+            <li><strong>User</strong>: asks AI a question, gets an answer, does the work manually</li>
+            <li><strong>Operator</strong>: builds a system that takes input, processes it through AI, and produces output at scale</li>
+            <li><strong>Leverage</strong>: the ratio between effort invested and output produced. Operators build systems where that ratio compounds.</li>
+            </ul>
+            <h3>Participant Introductions (20 min)</h3>
+            <p>Each participant: 60 seconds max.</p>
+            <ul>
+            <li>Name</li>
+            <li>What you do (role, industry, clients)</li>
+            <li>Where you spend the most time on repetitive, high-skill work</li>
+            <li>What "10x output" would look like for you</li>
+            </ul>
+            <p>Facilitator: take notes. These introductions reveal the leverage opportunities.</p>
+            <h3>Transition</h3>
+            <blockquote><p>"Module 02 starts in 5 minutes. You're going to map exactly where your time goes and identify where AI can multiply your output."</p>
+            </blockquote>
+            <h2>Participant Handout</h2>
+            <h3>What You're Doing This Weekend</h3>
+            <p>You are building an operator leverage package. By Sunday evening, you will have:</p>
+            <ul>
+            <li>A leverage map showing where AI multiplies your output</li>
+            <li>An opportunity thesis for your highest-leverage application</li>
+            <li>A working AI-powered workflow</li>
+            <li>A value asset (doc, template, or tool) that captures your leverage</li>
+            <li>Positioning that explains what you offer and why it's different</li>
+            <li>Proof: before/after comparison showing the leverage</li>
+            <li>One real outreach message sent to one real prospect</li>
+            </ul>
+            <h3>Weekend Schedule</h3>
+            <p><strong>Saturday</strong></p>
+            <table><thead><tr>
+            <th>Time</th>
+            <th>Module</th>
+            <th>Output</th>
+            </tr></thead><tbody>
+            <tr>
+            <td>9:00</td>
+            <td>Kickoff</td>
+            <td>Operator mindset set</td>
+            </tr>
+            <tr>
+            <td>9:45</td>
+            <td>Leverage Map</td>
+            <td>Map of current workflow + AI opportunity zones</td>
+            </tr>
+            <tr>
+            <td>11:00</td>
+            <td>Opportunity Thesis</td>
+            <td>One-page thesis on highest-leverage opportunity</td>
+            </tr>
+            <tr>
+            <td>1:00</td>
+            <td>AI Stack</td>
+            <td>Designed AI stack: models, tools, orchestration</td>
+            </tr>
+            <tr>
+            <td>2:30</td>
+            <td>Workflow</td>
+            <td>Working automated pipeline</td>
+            </tr>
+            </tbody></table>
+            <p><strong>Sunday</strong></p>
+            <table><thead><tr>
+            <th>Time</th>
+            <th>Module</th>
+            <th>Output</th>
+            </tr></thead><tbody>
+            <tr>
+            <td>9:00</td>
+            <td>Value Asset</td>
+            <td>Deliverable doc, template, or tool</td>
+            </tr>
+            <tr>
+            <td>10:30</td>
+            <td>Positioning</td>
+            <td>Positioning statement + offer description</td>
+            </tr>
+            <tr>
+            <td>1:00</td>
+            <td>Proof</td>
+            <td>Before/after comparison with metrics</td>
+            </tr>
+            <tr>
+            <td>3:00</td>
+            <td>Outreach</td>
+            <td>One real message to one real prospect</td>
+            </tr>
+            </tbody></table>
+            <h3>Rules</h3>
+            <ol>
+            <li>Real work only — no hypotheticals</li>
+            <li>Ship a working system, not a plan</li>
+            <li>Use your actual workflow, not a made-up example</li>
+            <li>Ask for help early</li>
+            </ol>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 09: Record Demo — Ship OS | ShipItAcademy.com</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0A;
+            --bg-elevated: #111111;
+            --bg-card: #161616;
+            --border: #222222;
+            --text-primary: #EDEDED;
+            --text-secondary: #888888;
+            --text-tertiary: #555555;
+            --accent: #d4a853;
+            --accent-dim: rgba(212, 168, 83, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            font-size: 14px;
+            color: var(--accent);
+            margin: 32px 0 0;
+            font-weight: 600;
+        }
+
+        .track-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin: 40px 0 16px;
+        }
+
+        .track-a {
+            background: rgba(212, 168, 83, 0.12);
+            color: #d4a853;
+        }
+
+        .track-b {
+            background: rgba(0, 102, 255, 0.12);
+            color: #4d94ff;
+        }
+
+        .content {
+            padding: 0 0 80px;
+        }
+
+        .content h1 {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.15;
+            margin-bottom: 40px;
+        }
+
+        .content h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 48px 0 16px;
+        }
+
+        .content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin: 32px 0 12px;
+        }
+
+        .content h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 24px 0 8px;
+        }
+
+        .content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+            max-width: 680px;
+        }
+
+        .content ul, .content ol {
+            margin: 0 0 16px 24px;
+            color: var(--text-secondary);
+        }
+
+        .content li {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 6px;
+        }
+
+        .content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 16px 20px;
+            margin: 20px 0;
+            background: var(--bg-card);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .content blockquote p {
+            color: var(--text-primary);
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        .content pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .content pre code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: none;
+            padding: 0;
+        }
+
+        .content code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            background: var(--bg-card);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--accent);
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        .content th {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .content td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .content h1 {
+                font-size: 28px;
+            }
+
+            .content h2 {
+                font-size: 22px;
+            }
+
+            .content {
+                padding: 0 0 60px;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">Operator Foundry</a>
+            <a href="https://shipitacademy.com" class="nav-link">ShipItAcademy.com</a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="container">
+            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-a">Track A — Ship Systems</span>
+            <h1>Module 09: Record Demo</h1>
+            <h2>Ship Systems Weekend — Sunday, 3:00 PM</h2>
+            <h2>Objective</h2>
+            <p>Record a 2-minute demo video of your system. Show what it does, how it works, and what you would build next. This is your proof of work.</p>
+            <h2>Duration</h2>
+            <p>90 minutes (recording + review)</p>
+            <h2>Facilitator Guide</h2>
+            <h3>Frame (10 min)</h3>
+            <blockquote><p>"You built a system. You shipped it. Now you document it. A 2-minute demo is worth more than a 20-page doc. It's proof you can build, and it's a portfolio piece you can send to anyone."</p>
+            </blockquote>
+            <h3>Demo Structure (strict 2-minute format)</h3>
+            <table><thead><tr>
+            <th>Segment</th>
+            <th>Duration</th>
+            <th>Content</th>
+            </tr></thead><tbody>
+            <tr>
+            <td>What it does</td>
+            <td>20 sec</td>
+            <td>One sentence: what the system does and who it's for</td>
+            </tr>
+            <tr>
+            <td>Live demo</td>
+            <td>60 sec</td>
+            <td>Screen recording: real input, real output, live system</td>
+            </tr>
+            <tr>
+            <td>How it works</td>
+            <td>20 sec</td>
+            <td>Quick architecture: "it uses X model, Y tools, deployed on Z"</td>
+            </tr>
+            <tr>
+            <td>What's next</td>
+            <td>20 sec</td>
+            <td>One or two things you'd build next with more time</td>
+            </tr>
+            </tbody></table>
+            <h3>Recording Guidelines</h3>
+            <ul>
+            <li>Screen recording with voiceover (no face cam required, but allowed)</li>
+            <li>Tools: Loom, QuickTime, OBS, or any screen recorder</li>
+            <li>Resolution: 1080p minimum</li>
+            <li>Audio: clear voice, no background noise. Use headset mic if available.</li>
+            <li>No editing required — one take is fine if it's clean</li>
+            </ul>
+            <h3>Build Block (50 min)</h3>
+            <p><strong>Step 1: Script (10 min)</strong></p>
+            <p>Write out what you'll say in each segment. Not a word-for-word script — bullet points.</p>
+            <p><strong>Step 2: Dry Run (10 min)</strong></p>
+            <p>Run through the demo once without recording. Time it. If it's over 2:30, cut content.</p>
+            <p><strong>Step 3: Record (15 min)</strong></p>
+            <p>Record the demo. You get 2-3 takes max. Pick the best one.</p>
+            <p><strong>Step 4: Upload (15 min)</strong></p>
+            <p>Upload to: YouTube (unlisted), Loom, Google Drive, or any shareable link.</p>
+            <p>Add the link to your project README.</p>
+            <h3>Demo Reviews (30 min)</h3>
+            <p>Each participant plays their demo for the room.</p>
+            <ul>
+            <li>Facilitator feedback: was the problem clear? Was the demo compelling? Was the "what's next" realistic?</li>
+            <li>Peer feedback: one piece of positive feedback, one suggestion</li>
+            </ul>
+            <h2>Participant Template</h2>
+            <h3>Demo Script</h3>
+            <p><strong>What it does (20 sec):</strong></p>
+            <blockquote><p>"[System name] is a [type of system] that [what it does] for [who it's for]. You give it [input] and it [produces output]."</p>
+            </blockquote>
+            <p><strong>Live demo (60 sec):</strong></p>
+            <ol>
+            <li>Open the deployed URL / run the CLI command</li>
+            <li>Provide [specific input]</li>
+            <li>Show the system processing</li>
+            <li>Show the output</li>
+            <li>Point out one thing that's particularly effective</li>
+            </ol>
+            <p><strong>How it works (20 sec):</strong></p>
+            <blockquote><p>"Under the hood, it uses [model/API] for [task], [tool] for [task], and is deployed on [platform]."</p>
+            </blockquote>
+            <p><strong>What's next (20 sec):</strong></p>
+            <blockquote><p>"With more time, I'd add [feature 1] and [feature 2]. The system is designed to [future capability]."</p>
+            </blockquote>
+            <h3>Demo Checklist</h3>
+            <ul>
+            <li>Demo is 2 minutes or less</li>
+            <li>Shows the live deployed system (not localhost)</li>
+            <li>Uses real input and produces real output</li>
+            <li>Audio is clear</li>
+            <li>Uploaded to a shareable URL</li>
+            <li>Link added to project README</li>
+            </ul>
+            <h2>Artifact</h2>
+            <p>Each participant: 2-minute demo video uploaded and linked in README.</p>
+            <h2>Weekend Complete</h2>
+            <p>You walked in with an idea. You're walking out with a defined, designed, built, tested, deployed, and documented AI system. That's what shipping looks like.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

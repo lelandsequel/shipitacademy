@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 05: Implement Capability — Ship OS | ShipItAcademy.com</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0A;
+            --bg-elevated: #111111;
+            --bg-card: #161616;
+            --border: #222222;
+            --text-primary: #EDEDED;
+            --text-secondary: #888888;
+            --text-tertiary: #555555;
+            --accent: #d4a853;
+            --accent-dim: rgba(212, 168, 83, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            font-size: 14px;
+            color: var(--accent);
+            margin: 32px 0 0;
+            font-weight: 600;
+        }
+
+        .track-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin: 40px 0 16px;
+        }
+
+        .track-a {
+            background: rgba(212, 168, 83, 0.12);
+            color: #d4a853;
+        }
+
+        .track-b {
+            background: rgba(0, 102, 255, 0.12);
+            color: #4d94ff;
+        }
+
+        .content {
+            padding: 0 0 80px;
+        }
+
+        .content h1 {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.15;
+            margin-bottom: 40px;
+        }
+
+        .content h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 48px 0 16px;
+        }
+
+        .content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin: 32px 0 12px;
+        }
+
+        .content h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 24px 0 8px;
+        }
+
+        .content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+            max-width: 680px;
+        }
+
+        .content ul, .content ol {
+            margin: 0 0 16px 24px;
+            color: var(--text-secondary);
+        }
+
+        .content li {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 6px;
+        }
+
+        .content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 16px 20px;
+            margin: 20px 0;
+            background: var(--bg-card);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .content blockquote p {
+            color: var(--text-primary);
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        .content pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .content pre code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: none;
+            padding: 0;
+        }
+
+        .content code {
+            font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+            font-size: 13px;
+            background: var(--bg-card);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--accent);
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        .content th {
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .content td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .content h1 {
+                font-size: 28px;
+            }
+
+            .content h2 {
+                font-size: 22px;
+            }
+
+            .content {
+                padding: 0 0 60px;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">Operator Foundry</a>
+            <a href="https://shipitacademy.com" class="nav-link">ShipItAcademy.com</a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="container">
+            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-a">Track A — Ship Systems</span>
+            <h1>Module 05: Implement Capability</h1>
+            <h2>Ship Systems Weekend — Saturday, 2:30 PM</h2>
+            <h2>Objective</h2>
+            <p>Build the core capability: one complete end-to-end flow that takes real input, processes it through your agent, and produces real output. This is the most important module of the weekend.</p>
+            <h2>Duration</h2>
+            <p>2.5 hours (until end of Saturday)</p>
+            <h2>Facilitator Guide</h2>
+            <h3>Frame (10 min)</h3>
+            <blockquote><p>"You have a skeleton. Now you make it do the one thing it's supposed to do. Not all the things. The one thing. Pick the most important flow from your system definition and make it work end-to-end."</p>
+            </blockquote>
+            <p>Rules for this module:</p>
+            <ol>
+            <li><strong>One flow only.</strong> Do not try to implement everything. Pick the core capability.</li>
+            <li><strong>End-to-end means end-to-end.</strong> Input goes in, output comes out. No manual steps in the middle.</li>
+            <li><strong>Real data, not mock data.</strong> Use actual API calls, actual model responses, actual file operations.</li>
+            <li><strong>Working beats clean.</strong> Refactor tomorrow. Ship today.</li>
+            </ol>
+            <h3>Selecting the Core Flow (10 min)</h3>
+            <p>Help each participant identify their core flow. Ask:</p>
+            <ul>
+            <li>"If your system could only do one thing, what would it be?"</li>
+            <li>"What's the flow that proves this system works?"</li>
+            <li>"What would you show in a 30-second demo?"</li>
+            </ul>
+            <p>That's the flow they implement now.</p>
+            <h3>Build Block (2 hours)</h3>
+            <p>This is deep work time. Minimize interruptions.</p>
+            <p><strong>Facilitator role during build block:</strong></p>
+            <ul>
+            <li>Walk the room every 20 minutes</li>
+            <li>Check: is anyone stuck? Anyone going down a rabbit hole?</li>
+            <li>Common intervention: "That's a nice-to-have. Cut it. Get the core flow working first."</li>
+            <li>If someone is blocked on an API or tool issue, help them unblock. Don't let them sit stuck.</li>
+            </ul>
+            <p><strong>Pacing checkpoints:</strong></p>
+            <ul>
+            <li><strong>:30 min</strong> — First tool should be implemented (not stubbed). If not, scope is too big.</li>
+            <li><strong>:60 min</strong> — Data should be flowing between at least two components. If not, debug the integration.</li>
+            <li><strong>:90 min</strong> — Core flow should produce output (even if rough). If not, cut scope further.</li>
+            <li><strong>:120 min</strong> — Core flow should be complete and repeatable. Commit.</li>
+            </ul>
+            <h3>End of Day Review (10 min)</h3>
+            <p>Quick around-the-room check:</p>
+            <ul>
+            <li>"Show me your system taking input and producing output."</li>
+            <li>No slides. No explanations. Just run it.</li>
+            <li>If it works: commit, push, you're done for the day.</li>
+            <li>If it doesn't: note what's broken. First task tomorrow is fixing it before Module 06.</li>
+            </ul>
+            <h2>Participant Guide</h2>
+            <h3>Step 1: Identify Your Core Flow</h3>
+            <p>Write it as a single sentence:</p>
+            <blockquote><p>"User provides [input], system [processes it using tools X and Y], and produces [output]."</p>
+            </blockquote>
+            <h3>Step 2: Implement Tools (in order of the data flow)</h3>
+            <p>Work through the flow left to right:</p>
+            <ol>
+            <li>Implement the first tool that touches the input</li>
+            <li>Implement the processing/transformation tool(s)</li>
+            <li>Implement the output tool</li>
+            </ol>
+            <p>For each tool:</p>
+            <ul>
+            <li>Replace the stub with real logic</li>
+            <li>Test it in isolation: does it work with sample input?</li>
+            <li>Wire it into the agent flow</li>
+            <li>Test the integration: does data flow correctly from the previous step?</li>
+            </ul>
+            <h3>Step 3: Run the Full Flow</h3>
+            <ul>
+            <li>Provide real input</li>
+            <li>Watch it flow through the system</li>
+            <li>Check the output against your success criteria from Module 02</li>
+            <li>Fix what's broken</li>
+            <li>Run it again</li>
+            </ul>
+            <h3>Step 4: Commit</h3>
+            <pre><code>
+            git add -A
+            git commit -m "feat: implement core capability — [describe what the flow does]"
+            git push
+            </code></pre>
+            <h2>Troubleshooting</h2>
+            <table><thead><tr>
+            <th>Symptom</th>
+            <th>Likely Cause</th>
+            <th>Fix</th>
+            </tr></thead><tbody>
+            <tr>
+            <td>Tool works alone but fails in agent</td>
+            <td>Input/output format mismatch</td>
+            <td>Check what the agent sends vs. what the tool expects</td>
+            </tr>
+            <tr>
+            <td>API returns errors</td>
+            <td>Auth, rate limits, or malformed request</td>
+            <td>Check API docs, verify key, inspect request payload</td>
+            </tr>
+            <tr>
+            <td>Output is wrong but no errors</td>
+            <td>Prompt issue or data transformation bug</td>
+            <td>Log intermediate steps, inspect what each tool receives and returns</td>
+            </tr>
+            <tr>
+            <td>System is too slow</td>
+            <td>Too many API calls or large payloads</td>
+            <td>Reduce input size for testing, optimize later</td>
+            </tr>
+            <tr>
+            <td>Scope feels too big</td>
+            <td>It is too big</td>
+            <td>Cut features. Ship the minimum flow.</td>
+            </tr>
+            </tbody></table>
+            <h2>Artifact</h2>
+            <p>Each participant commits: working core capability with at least one end-to-end flow.</p>
+            <h2>End of Saturday</h2>
+            <p>You now have a working AI system. It does one thing. It does it for real. Tomorrow you add eval, an interface, deploy it, and record a demo.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
