@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship OS — Your Execution Environment | ShipItAcademy.com</title>
+    <meta name="description" content="Ship OS: your execution environment hub. Everything you need to ship an AI system this weekend.">
+    <meta property="og:url" content="https://shipitacademy.com/ship-os">
+    <meta property="og:title" content="Ship OS — Your Execution Environment">
+    <meta property="og:description" content="Everything you need to ship an AI system this weekend. No schedule. No lectures. Start where you want.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ship OS — Your Execution Environment">
+    <meta name="twitter:description" content="Everything you need to ship an AI system this weekend. No schedule. No lectures. Start where you want.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0A0A0A;
+            --bg-elevated: #111111;
+            --bg-card: #161616;
+            --border: #222222;
+            --text-primary: #EDEDED;
+            --text-secondary: #888888;
+            --text-tertiary: #555555;
+            --accent: #d4a853;
+            --accent-dim: rgba(212, 168, 83, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ---- NAV ---- */
+        nav {
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .nav-link {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color 0.15s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        /* ---- HERO ---- */
+        .hero {
+            padding: 120px 0 100px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1.1;
+            max-width: 680px;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero-sub {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .hero-note {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            letter-spacing: 0.02em;
+        }
+
+        /* ---- SECTION ---- */
+        .section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .section-heading {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .section-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        /* ---- STEPS ---- */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 24px;
+        }
+
+        .step-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px 24px;
+        }
+
+        .step-number {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 16px;
+            letter-spacing: 0.05em;
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .step-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ---- TRACKS ---- */
+        .tracks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .track {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px;
+        }
+
+        .track-tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        .track-tag-a {
+            background: var(--accent-dim);
+            color: var(--accent);
+        }
+
+        .track-tag-b {
+            background: rgba(0, 102, 255, 0.12);
+            color: #4d94ff;
+        }
+
+        .track-title {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .track-goal {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .module-list {
+            list-style: none;
+        }
+
+        .module-item {
+            padding: 14px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .module-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .module-num {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 4px;
+        }
+
+        .module-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .module-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .module-link {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            transition: opacity 0.15s;
+        }
+
+        .module-link:hover {
+            opacity: 0.8;
+        }
+
+        /* ---- TOOLS ---- */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+
+        .tool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .tool-name {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .tool-purpose {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .tool-link {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        /* ---- COMMUNITY ---- */
+        .community-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 40px;
+            max-width: 600px;
+        }
+
+        .community-box h3 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .community-box p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .community-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: #000;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 12px 28px;
+            border-radius: 6px;
+            transition: opacity 0.15s;
+        }
+
+        .community-btn:hover {
+            opacity: 0.88;
+            text-decoration: none;
+        }
+
+        /* ---- FOOTER ---- */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero-sub {
+                font-size: 16px;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .section-heading {
+                font-size: 26px;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .tracks-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .track {
+                padding: 24px;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .community-box {
+                padding: 28px;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">Operator Foundry</a>
+            <a href="https://shipitacademy.com" class="nav-link">ShipItAcademy.com</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <h1>You are in. <span>Ship OS is live.</span></h1>
+            <p class="hero-sub">This is your execution environment. Everything you need to ship an AI system this weekend is below. No schedule. No lectures. Start where you want. Ship when you are ready.</p>
+            <p class="hero-note">Bookmark this page. This is your home base.</p>
+        </div>
+    </section>
+
+    <!-- HOW TO USE -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">Getting started</div>
+            <h2 class="section-heading">How to use Ship OS</h2>
+            <p class="section-text">Three steps. No hand-holding. You drive.</p>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-title">Read the Brief</div>
+                    <div class="step-desc">Understand what you are building and why. Get clear on the outcome before you touch any code.</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-title">Run the Build</div>
+                    <div class="step-desc">Follow the structured prompts and ship each module. One at a time. Stack them up.</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-title">Deploy + Share</div>
+                    <div class="step-desc">Get your system live and document what you built. Real output. Real URL. Real proof.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRACKS -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">Build tracks</div>
+            <h2 class="section-heading">Choose your track</h2>
+            <p class="section-text">Two paths. Both end with something shipped. Pick the one that fits where you are.</p>
+            <div class="tracks-grid">
+
+                <!-- TRACK A -->
+                <div class="track">
+                    <span class="track-tag track-tag-a">Track A</span>
+                    <h3 class="track-title">Ship Systems</h3>
+                    <p class="track-goal">Build + deploy a working AI system</p>
+                    <ul class="module-list">
+                        <li class="module-item">
+                            <div class="module-num">Module 1</div>
+                            <div class="module-name">Kickoff</div>
+                            <div class="module-desc">Set up your environment and lock in your build target.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 2</div>
+                            <div class="module-name">Define System</div>
+                            <div class="module-desc">Scope your system: what it does, who it serves, what counts as done.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 3</div>
+                            <div class="module-name">Design Spec</div>
+                            <div class="module-desc">Write the technical spec before you build. Architecture, data flow, interfaces.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 4</div>
+                            <div class="module-name">Scaffold Agent</div>
+                            <div class="module-desc">Set up the core agent structure: prompts, tools, and execution loop.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 5</div>
+                            <div class="module-name">Implement Capability</div>
+                            <div class="module-desc">Build the primary capability your system delivers. Make it work end to end.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 6</div>
+                            <div class="module-name">Add Eval</div>
+                            <div class="module-desc">Add evaluation so you know if your system actually works. Measure before you ship.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 7</div>
+                            <div class="module-name">Add Interface</div>
+                            <div class="module-desc">Give your system a usable interface. CLI, web, API — whatever fits.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 8</div>
+                            <div class="module-name">Deploy</div>
+                            <div class="module-desc">Push to production. Get a live URL. Make it real.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 9</div>
+                            <div class="module-name">Record Demo</div>
+                            <div class="module-desc">Capture a walkthrough of your working system. Proof you shipped.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- TRACK B -->
+                <div class="track">
+                    <span class="track-tag track-tag-b">Track B</span>
+                    <h3 class="track-title">Leverage Systems</h3>
+                    <p class="track-goal">Build your operator leverage package</p>
+                    <ul class="module-list">
+                        <li class="module-item">
+                            <div class="module-num">Module 1</div>
+                            <div class="module-name">Kickoff</div>
+                            <div class="module-desc">Define your starting position and what leverage means for you.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 2</div>
+                            <div class="module-name">Leverage Map</div>
+                            <div class="module-desc">Map where you have leverage today and where the gaps are.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 3</div>
+                            <div class="module-name">Opportunity Thesis</div>
+                            <div class="module-desc">Write a clear thesis on the opportunity you are pursuing and why now.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 4</div>
+                            <div class="module-name">AI Stack</div>
+                            <div class="module-desc">Define the AI tools and models in your operational stack.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 5</div>
+                            <div class="module-name">Workflow</div>
+                            <div class="module-desc">Design your core workflow. How work flows from input to output.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 6</div>
+                            <div class="module-name">Value Asset</div>
+                            <div class="module-desc">Build a tangible asset that demonstrates your value. Ship something real.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 7</div>
+                            <div class="module-name">Positioning</div>
+                            <div class="module-desc">Articulate what you do, who you do it for, and why you are the one to do it.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 8</div>
+                            <div class="module-name">Proof</div>
+                            <div class="module-desc">Package your proof: case studies, demos, results. Make it undeniable.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                        <li class="module-item">
+                            <div class="module-num">Module 9</div>
+                            <div class="module-name">Outreach</div>
+                            <div class="module-desc">Build your outreach system. Get your work in front of the right people.</div>
+                            <a href="#" class="module-link">Open Module &rarr;</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- TOOLS -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">Resources</div>
+            <h2 class="section-heading">Your toolkit</h2>
+            <p class="section-text">The tools you need. Nothing extra.</p>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-name">Claude</div>
+                    <div class="tool-purpose">AI model — your build partner</div>
+                    <a href="https://claude.ai" target="_blank" class="tool-link">claude.ai &rarr;</a>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-name">Cursor / VS Code</div>
+                    <div class="tool-purpose">Code editor</div>
+                    <a href="https://cursor.sh" target="_blank" class="tool-link">cursor.sh &rarr;</a>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-name">Vercel</div>
+                    <div class="tool-purpose">Deploy to production</div>
+                    <a href="https://vercel.com" target="_blank" class="tool-link">vercel.com &rarr;</a>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-name">GitHub</div>
+                    <div class="tool-purpose">Version control</div>
+                    <a href="https://github.com" target="_blank" class="tool-link">github.com &rarr;</a>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-name">OpenClaw</div>
+                    <div class="tool-purpose">AI operator system</div>
+                    <a href="https://openclaw.ai" target="_blank" class="tool-link">openclaw.ai &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMMUNITY -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">Community</div>
+            <h2 class="section-heading">Share your build</h2>
+            <div class="community-box">
+                <h3>You shipped something. Show it.</h3>
+                <p>When you ship, share what you built. Drop a link in the community. Others are building too. Seeing real work from real people is the best fuel there is.</p>
+                <a href="#" class="community-btn">Join the Community &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
