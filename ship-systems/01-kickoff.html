@@ -102,11 +102,6 @@
             color: #d4a853;
         }
 
-        .track-b {
-            background: rgba(0, 102, 255, 0.12);
-            color: #4d94ff;
-        }
-
         .content {
             padding: 0 0 80px;
         }
@@ -227,6 +222,46 @@
             font-weight: 600;
         }
 
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: "\2705";
+            position: absolute;
+            left: 0;
+        }
+
+        .module-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 60px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .module-nav a {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .module-nav .prev::before {
+            content: "\2190 ";
+        }
+
+        .module-nav .next::after {
+            content: " \2192";
+        }
+
         footer {
             padding: 40px 0;
             border-top: 1px solid var(--border);
@@ -290,139 +325,206 @@
 
     <div class="content">
         <div class="container">
-            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
-            <span class="track-badge track-a">Track A — Ship Systems</span>
+            <a href="/ship-os/" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-a">Track A &mdash; Ship Systems</span>
             <h1>Module 01: Kickoff</h1>
-            <h2>Ship Systems Weekend — Saturday, 9:00 AM</h2>
-            <h2>Facilitator Guide</h2>
-            <h3>Objective</h3>
-            <p>Frame the goal. Set the standard. Make it real: every participant ships a working AI system by Sunday evening.</p>
-            <h3>Setup (before participants arrive)</h3>
+
+            <!-- WHAT YOU ARE BUILDING -->
+            <h2>What You Are Building</h2>
+            <p>In this module, you are orienting yourself to the Ship Systems course. By the end, you will have a clear picture of what you are building across all 9 modules, what tools you need, and a personal commitment to the rules that make this work. Your output is a completed <strong>Ready to Ship</strong> checklist confirming you have everything in place to start building.</p>
+
+            <!-- WHY IT MATTERS -->
+            <h2>Why It Matters</h2>
+            <p>Most people who want to build AI systems get stuck in research mode. They read documentation, watch tutorials, and tinker with prompts&mdash;but never ship anything real. This course exists to break that pattern. Over 9 modules, you will go from a blank page to a deployed, working AI system with a recorded demo. Every module produces a concrete artifact. Nothing is theoretical. If you set up correctly now, the rest of the course flows. If you skip this step, you will hit friction later. Take 20 minutes to get your environment and mindset right.</p>
+
+            <!-- STEP BY STEP -->
+            <h2>Step-by-Step Instructions</h2>
+
+            <h3>Step 1: Understand What You Will Build</h3>
+            <p>Across the 9 modules of Ship Systems, you are building a complete AI system from scratch. Not a toy. Not a demo. A working system that takes real inputs, processes them through AI, and produces real outputs for a real user.</p>
+            <p>Here is the full roadmap:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Module</th>
+                        <th>What You Do</th>
+                        <th>Output</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>01: Kickoff</strong></td>
+                        <td>Orient yourself, set up tools</td>
+                        <td>Ready to Ship checklist</td>
+                    </tr>
+                    <tr>
+                        <td><strong>02: Define System</strong></td>
+                        <td>Define what your AI system does</td>
+                        <td><code>docs/system-definition.md</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>03: Design Spec</strong></td>
+                        <td>Design the technical architecture</td>
+                        <td><code>docs/architecture-spec.md</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>04: Scaffold Agent</strong></td>
+                        <td>Build the skeleton of your agent</td>
+                        <td>Working agent scaffold with config</td>
+                    </tr>
+                    <tr>
+                        <td><strong>05: Implement Capability</strong></td>
+                        <td>Add core functionality</td>
+                        <td>Agent that processes real input</td>
+                    </tr>
+                    <tr>
+                        <td><strong>06: Add Eval</strong></td>
+                        <td>Add evaluation and testing</td>
+                        <td>Eval suite that validates output</td>
+                    </tr>
+                    <tr>
+                        <td><strong>07: Add Interface</strong></td>
+                        <td>Build the user-facing interface</td>
+                        <td>Usable front-end or CLI</td>
+                    </tr>
+                    <tr>
+                        <td><strong>08: Deploy</strong></td>
+                        <td>Deploy to production</td>
+                        <td>Live, accessible system</td>
+                    </tr>
+                    <tr>
+                        <td><strong>09: Record Demo</strong></td>
+                        <td>Record a walkthrough demo</td>
+                        <td>2-minute demo video</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Step 2: Gather What You Need</h3>
+            <p>Before you proceed to Module 02, make sure you have the following ready:</p>
             <ul>
-            <li>Room: power strips at every table, projector live, Wi-Fi credentials on whiteboard</li>
-            <li>Confirm each participant has repo access, API keys, and dev environment ready</li>
-            <li>Have the setup checklist printed as backup</li>
+                <li><strong>A computer</strong> with a code editor installed (VS Code recommended)</li>
+                <li><strong>A terminal</strong> you are comfortable using</li>
+                <li><strong>Git</strong> installed and a GitHub account</li>
+                <li><strong>Node.js or Python</strong> installed (depending on your preference)</li>
+                <li><strong>An AI API key</strong> &mdash; OpenAI, Anthropic, or another provider you plan to use</li>
+                <li><strong>Claude or ChatGPT access</strong> for brainstorming and drafting (used heavily in Modules 02-03)</li>
+                <li><strong>A quiet block of time</strong> &mdash; plan for 8-12 hours total across all 9 modules</li>
             </ul>
-            <h3>Opening (15 min)</h3>
-            <ol>
-            <li>Welcome. No preamble. State the mission:</li>
-            <blockquote><p>"You are here to build and ship a working AI system in 48 hours. Not a demo. Not a slide deck. A system that runs, takes input, produces output, and is deployed to a live URL."</p>
+
+            <h3>Step 3: Commit to the Rules</h3>
+            <p>These three rules keep the course working. Read them. Internalize them.</p>
+
+            <blockquote>
+                <p><strong>Rule 1: Ship over polish.</strong> A working system that is rough beats a polished system that does not exist. You can always improve later. Your job in this course is to get something real into the world.</p>
             </blockquote>
-            <li>Introduce yourself. Briefly. Credentials only — no life story.</li>
-            <li>Introduce the weekend structure:</li>
-            </ol>
-            <ul>
-            <li>Saturday: define, design, scaffold, build</li>
-            <li>Sunday: eval, interface, deploy, demo</li>
-            </ul>
-            <h3>Rules of Engagement (5 min)</h3>
-            <ul>
-            <li>Ship over polish. Working beats elegant.</li>
-            <li>Ask for help early. Getting stuck for 30 minutes without raising a hand is a failure mode.</li>
-            <li>Every module produces an artifact. No module ends without something written, committed, or deployed.</li>
-            <li>Phones away during build blocks. Slack/Discord is the only communication channel.</li>
-            </ul>
-            <h3>Participant Introductions (20 min)</h3>
-            <p>Each participant: 60 seconds max.</p>
-            <ul>
-            <li>Name</li>
-            <li>What you build (day job or side project)</li>
-            <li>What AI system you want to ship this weekend (even if rough)</li>
-            </ul>
-            <p>Facilitator: take notes. You'll reference these during build support.</p>
-            <h3>Transition</h3>
-            <blockquote><p>"Module 02 starts in 5 minutes. When we come back, you define exactly what you're building. Not vaguely. Precisely."</p>
+
+            <blockquote>
+                <p><strong>Rule 2: Every module produces an artifact.</strong> You do not move to the next module until you have the output for the current one. No skipping. No "I'll come back to it." Each artifact builds on the last.</p>
             </blockquote>
-            <h2>Participant Handout</h2>
-            <h3>What You're Doing This Weekend</h3>
-            <p>You are building and shipping a working AI system. By Sunday evening, you will have:</p>
-            <ul>
-            <li>A defined system with clear inputs, outputs, and agent roles</li>
-            <li>A working codebase with at least one end-to-end capability</li>
-            <li>Evaluation criteria and test cases</li>
-            <li>A deployed, live system with a URL</li>
-            <li>A 2-minute recorded demo</li>
+
+            <blockquote>
+                <p><strong>Rule 3: Ask for help when stuck.</strong> If you are stuck for more than 15 minutes, use Claude or ChatGPT to get unstuck. Paste your current state, describe the problem, and ask for a concrete next step. Do not spin.</p>
+            </blockquote>
+
+            <h3>Step 4: Set Up Your Project Folder</h3>
+            <p>Create a project directory for your AI system. You will use this throughout the entire course.</p>
+
+<pre><code>mkdir my-ai-system
+cd my-ai-system
+git init
+mkdir docs
+echo "# My AI System" > README.md
+git add .
+git commit -m "Initial commit"</code></pre>
+
+            <p>Replace <code>my-ai-system</code> with a name that describes what you plan to build. If you do not know yet, that is fine&mdash;use a placeholder. You will define it in Module 02.</p>
+
+            <h3>Step 5: Complete the Ready to Ship Checklist</h3>
+            <p>Go through the artifact template below. Check every item honestly. If something is missing, fix it now before moving on.</p>
+
+            <!-- ARTIFACT TEMPLATE -->
+            <h2>Artifact: Ready to Ship Checklist</h2>
+            <p>Copy this into a file called <code>docs/ready-to-ship.md</code> in your project folder and fill it out:</p>
+
+<pre><code># Ready to Ship Checklist
+
+## Environment
+- [ ] Code editor installed and working
+- [ ] Terminal accessible
+- [ ] Git installed (`git --version` returns a version number)
+- [ ] GitHub account active
+- [ ] Programming language runtime installed (Node.js / Python)
+- [ ] AI API key obtained and tested
+
+## Project Setup
+- [ ] Project directory created
+- [ ] Git repository initialized
+- [ ] `docs/` folder created
+- [ ] README.md exists
+
+## Mindset
+- [ ] I will ship over polish
+- [ ] I will produce an artifact every module
+- [ ] I will ask for help when stuck for more than 15 minutes
+
+## Ready
+- [ ] I have reviewed the 9-module roadmap
+- [ ] I have blocked time to complete this course
+- [ ] I am starting Module 02 now</code></pre>
+
+            <!-- EXAMPLE OUTPUT -->
+            <h2>Example Output</h2>
+            <p>Here is what a completed checklist looks like:</p>
+
+<pre><code># Ready to Ship Checklist
+
+## Environment
+- [x] Code editor installed and working (VS Code 1.85)
+- [x] Terminal accessible (iTerm2 on macOS)
+- [x] Git installed (`git --version` returns 2.43.0)
+- [x] GitHub account active (github.com/janebuilder)
+- [x] Programming language runtime installed (Node.js 20.11.0)
+- [x] AI API key obtained and tested (Anthropic API, tested with curl)
+
+## Project Setup
+- [x] Project directory created (~/projects/invoice-processor)
+- [x] Git repository initialized
+- [x] `docs/` folder created
+- [x] README.md exists
+
+## Mindset
+- [x] I will ship over polish
+- [x] I will produce an artifact every module
+- [x] I will ask for help when stuck for more than 15 minutes
+
+## Ready
+- [x] I have reviewed the 9-module roadmap
+- [x] I have blocked 10 hours this week
+- [x] I am starting Module 02 now</code></pre>
+
+            <!-- DONE CRITERIA -->
+            <h2>Done Criteria</h2>
+            <ul class="checklist">
+                <li>You have a project directory with Git initialized</li>
+                <li>You have a <code>docs/</code> folder in your project</li>
+                <li>You have a code editor, terminal, and Git working</li>
+                <li>You have an AI API key ready to use</li>
+                <li>You have saved <code>docs/ready-to-ship.md</code> with all items checked</li>
+                <li>You understand the 9-module roadmap and what each module produces</li>
             </ul>
-            <h3>Weekend Schedule</h3>
-            <p><strong>Saturday</strong></p>
-            <table><thead><tr>
-            <th>Time</th>
-            <th>Module</th>
-            <th>Output</th>
-            </tr></thead><tbody>
-            <tr>
-            <td>9:00</td>
-            <td>Kickoff</td>
-            <td>Expectations set</td>
-            </tr>
-            <tr>
-            <td>9:45</td>
-            <td>Define System</td>
-            <td>System definition doc</td>
-            </tr>
-            <tr>
-            <td>11:00</td>
-            <td>Design Spec</td>
-            <td>Architecture spec</td>
-            </tr>
-            <tr>
-            <td>1:00</td>
-            <td>Scaffold Agent</td>
-            <td>Working repo with agent skeleton</td>
-            </tr>
-            <tr>
-            <td>2:30</td>
-            <td>Implement Capability</td>
-            <td>First end-to-end flow</td>
-            </tr>
-            </tbody></table>
-            <p><strong>Sunday</strong></p>
-            <table><thead><tr>
-            <th>Time</th>
-            <th>Module</th>
-            <th>Output</th>
-            </tr></thead><tbody>
-            <tr>
-            <td>9:00</td>
-            <td>Add Eval</td>
-            <td>Test suite with pass/fail criteria</td>
-            </tr>
-            <tr>
-            <td>10:30</td>
-            <td>Add Interface</td>
-            <td>CLI, web UI, or API endpoint</td>
-            </tr>
-            <tr>
-            <td>1:00</td>
-            <td>Deploy</td>
-            <td>Live URL</td>
-            </tr>
-            <tr>
-            <td>3:00</td>
-            <td>Record Demo</td>
-            <td>2-min video</td>
-            </tr>
-            </tbody></table>
-            <h3>What You Need</h3>
-            <ul>
-            <li>Laptop with dev environment configured (see setup checklist)</li>
-            <li>API keys for your chosen model provider</li>
-            <li>GitHub account with repo access</li>
-            <li>Willingness to ship imperfect work</li>
-            </ul>
-            <h3>Rules</h3>
-            <ol>
-            <li>Ship over polish</li>
-            <li>Ask for help early</li>
-            <li>Every module produces an artifact</li>
-            <li>Phones away during build blocks</li>
-            </ol>
+
+            <div class="module-nav">
+                <div></div>
+                <div><a href="02-define-system.html" class="next">Module 02: Define System</a></div>
+            </div>
         </div>
     </div>
 
     <footer>
         <div class="container">
-            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <span class="footer-text">Operator Foundry &mdash; <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
             <div class="footer-links">
                 <a href="/">Home</a>
                 <a href="/privacy.html">Privacy Policy</a>

@@ -102,11 +102,6 @@
             color: #d4a853;
         }
 
-        .track-b {
-            background: rgba(0, 102, 255, 0.12);
-            color: #4d94ff;
-        }
-
         .content {
             padding: 0 0 80px;
         }
@@ -227,6 +222,46 @@
             font-weight: 600;
         }
 
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: "\2705";
+            position: absolute;
+            left: 0;
+        }
+
+        .module-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 60px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .module-nav a {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .module-nav .prev::before {
+            content: "\2190 ";
+        }
+
+        .module-nav .next::after {
+            content: " \2192";
+        }
+
         footer {
             padding: 40px 0;
             border-top: 1px solid var(--border);
@@ -290,102 +325,577 @@
 
     <div class="content">
         <div class="container">
-            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
-            <span class="track-badge track-a">Track A — Ship Systems</span>
+            <a href="/ship-os/" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-a">Track A &mdash; Ship Systems</span>
             <h1>Module 06: Add Eval</h1>
-            <h2>Ship Systems Weekend — Sunday, 9:00 AM</h2>
-            <h2>Objective</h2>
-            <p>Add evaluation to your system: test cases, pass/fail criteria, and automated checks. A system without eval is a toy. A system with eval is infrastructure.</p>
-            <h2>Duration</h2>
-            <p>90 minutes</p>
-            <h2>Facilitator Guide</h2>
-            <h3>Frame (10 min)</h3>
-            <blockquote><p>"Yesterday you built a system that works. Today you prove it works. Eval is what separates a weekend hack from a real system. If you can't test it, you can't trust it, and you can't improve it."</p>
-            </blockquote>
-            <p>Three levels of eval:</p>
+
+            <!-- WHAT YOU ARE BUILDING -->
+            <h2>What You Are Building</h2>
+            <p>A test suite that proves your system works: 3&ndash;5 test cases with defined pass/fail criteria and an automated eval script that runs all cases and reports results. When you finish this module, you can run a single command and see exactly which parts of your system pass and which fail.</p>
+
+            <!-- WHY IT MATTERS -->
+            <h2>Why It Matters</h2>
+            <p>A system without eval is a toy. A system with eval is infrastructure. Right now your core flow works &mdash; you verified that in Module 05. But how do you know it still works after you change something? How do you know it handles edge cases? How do you prove to someone else that it works? Eval answers all three questions. It also gives you a baseline you can measure improvements against. Every serious AI system ships with evaluation. Yours will too.</p>
+
+            <!-- THREE LEVELS -->
+            <h2>Three Levels of Eval</h2>
+            <p>There are three levels of evaluation for AI systems. In this module you are building levels 1 and 2. Level 3 comes naturally once you have the first two in place.</p>
             <ol>
-            <li><strong>Functional tests</strong> — does the system produce output in the correct format?</li>
-            <li><strong>Quality tests</strong> — is the output good? Does it meet the success criteria from Module 02?</li>
-            <li><strong>Regression tests</strong> — when you change something, does the system still work?</li>
+                <li><strong>Functional tests</strong> &mdash; does the system produce output in the correct format? Does it return a result at all? Does it handle errors without crashing?</li>
+                <li><strong>Quality tests</strong> &mdash; is the output good? Does it meet the success criteria from your system definition? Is the content accurate and relevant?</li>
+                <li><strong>Regression tests</strong> &mdash; when you change something, does the system still pass the tests it passed before? (This is automatic once you have levels 1 and 2.)</li>
             </ol>
-            <p>For this weekend, participants build levels 1 and 2. Level 3 comes naturally from having 1 and 2.</p>
-            <h3>Build Block (70 min)</h3>
-            <p><strong>Step 1: Define Test Cases (20 min)</strong></p>
-            <p>Participants write 3-5 test cases:</p>
+
+            <!-- STEP BY STEP -->
+            <h2>Step-by-Step Instructions</h2>
+
+            <h3>Step 1: Write 3&ndash;5 Test Cases</h3>
+            <p>Create a file at <code>tests/cases/</code> for your test cases. You need a minimum of 3 cases, ideally 5. Use this distribution:</p>
             <ul>
-            <li>2 "happy path" cases — standard inputs that should produce correct output</li>
-            <li>1 "edge case" — unusual but valid input</li>
-            <li>1 "failure case" — invalid input that should be handled gracefully</li>
-            <li>1 "quality case" — input where you evaluate output quality, not just format</li>
+                <li><strong>2 happy-path cases</strong> &mdash; standard, expected inputs that should produce correct output</li>
+                <li><strong>1 edge-case</strong> &mdash; unusual but valid input (very short, very long, special characters, etc.)</li>
+                <li><strong>1 failure case</strong> &mdash; invalid input that should be handled gracefully (empty string, wrong format, etc.)</li>
+                <li><strong>1 quality case</strong> &mdash; input where you evaluate output quality, not just format</li>
             </ul>
-            <p><strong>Step 2: Write Pass/Fail Criteria (15 min)</strong></p>
-            <p>For each test case, define:</p>
+
+            <p>Use the template below for each test case. Save each case as a separate JSON file.</p>
+
+            <h4>Test case template &mdash; <code>tests/cases/case-01-happy.json</code></h4>
+<pre><code>{
+  "name": "Happy path — standard research topic",
+  "type": "happy-path",
+  "input": "Summarize recent research on sleep and memory",
+  "expected": {
+    "format": "markdown with headers and bullet points",
+    "must_contain": ["Key Findings", "Sources"],
+    "must_not_contain": ["[STUB]", "ERROR"],
+    "min_length": 200,
+    "max_length": 5000
+  },
+  "pass_criteria": [
+    "Output is valid markdown",
+    "Output contains a Key Findings section",
+    "Output contains at least 2 source citations",
+    "Output is between 200 and 5000 characters"
+  ]
+}</code></pre>
+
+            <h3>Step 2: Define Pass/Fail for Each Case</h3>
+            <p>For each test case, be specific about what constitutes a pass and what constitutes a fail. Avoid vague criteria like "output looks good." Use measurable checks:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Check Type</th>
+                        <th>Example</th>
+                        <th>How to Automate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Format check</td>
+                        <td>Output contains a <code>##</code> header</td>
+                        <td>String search or regex</td>
+                    </tr>
+                    <tr>
+                        <td>Content presence</td>
+                        <td>Output mentions at least 2 sources</td>
+                        <td>Count occurrences of a pattern</td>
+                    </tr>
+                    <tr>
+                        <td>Content absence</td>
+                        <td>Output does not contain <code>[STUB]</code></td>
+                        <td>String search returns false</td>
+                    </tr>
+                    <tr>
+                        <td>Length check</td>
+                        <td>Output is between 200 and 5000 characters</td>
+                        <td>Check string length</td>
+                    </tr>
+                    <tr>
+                        <td>Error handling</td>
+                        <td>System returns a helpful error, not a stack trace</td>
+                        <td>Check output does not contain <code>Traceback</code> or <code>Error:</code></td>
+                    </tr>
+                    <tr>
+                        <td>Completion</td>
+                        <td>System returns a result within 60 seconds</td>
+                        <td>Timeout check</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Step 3: Create the Eval Script</h3>
+            <p>Create the eval runner that loads all test cases, runs each one through your system, checks the pass/fail criteria, and reports results.</p>
+
+            <h4>Python &mdash; <code>tests/eval.py</code></h4>
+<pre><code>import json
+import os
+import sys
+import time
+import glob
+
+# Add parent directory to path so we can import the agent
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+from src.agent import run_agent
+
+
+def load_test_cases(cases_dir):
+    """Load all JSON test case files from the cases directory."""
+    cases = []
+    for filepath in sorted(glob.glob(os.path.join(cases_dir, "*.json"))):
+        with open(filepath) as f:
+            case = json.load(f)
+            case["_file"] = os.path.basename(filepath)
+            cases.append(case)
+    return cases
+
+
+def check_result(output, expected):
+    """Check output against expected criteria. Returns (passed, failures)."""
+    failures = []
+
+    if output is None:
+        return False, ["Output is None — system returned no result"]
+
+    # Check minimum length
+    if "min_length" in expected:
+        if len(output) &lt; expected["min_length"]:
+            failures.append(
+                f"Output too short: {len(output)} &lt; {expected['min_length']}"
+            )
+
+    # Check maximum length
+    if "max_length" in expected:
+        if len(output) &gt; expected["max_length"]:
+            failures.append(
+                f"Output too long: {len(output)} &gt; {expected['max_length']}"
+            )
+
+    # Check must_contain
+    for phrase in expected.get("must_contain", []):
+        if phrase.lower() not in output.lower():
+            failures.append(f"Missing required content: '{phrase}'")
+
+    # Check must_not_contain
+    for phrase in expected.get("must_not_contain", []):
+        if phrase.lower() in output.lower():
+            failures.append(f"Contains forbidden content: '{phrase}'")
+
+    passed = len(failures) == 0
+    return passed, failures
+
+
+def run_eval():
+    """Run all test cases and report results."""
+    cases_dir = os.path.join(os.path.dirname(__file__), "cases")
+    cases = load_test_cases(cases_dir)
+
+    if not cases:
+        print("No test cases found in tests/cases/")
+        sys.exit(1)
+
+    results = []
+    total_passed = 0
+    total_failed = 0
+
+    print(f"Running {len(cases)} test cases...\n")
+    print("=" * 60)
+
+    for case in cases:
+        name = case["name"]
+        case_type = case.get("type", "unknown")
+        print(f"\n[{case_type.upper()}] {name}")
+        print(f"  File: {case['_file']}")
+        print(f"  Input: {case['input'][:80]}...")
+
+        start = time.time()
+        try:
+            output = run_agent(case["input"])
+            elapsed = time.time() - start
+
+            passed, failures = check_result(output, case["expected"])
+
+            if passed:
+                print(f"  Result: PASS ({elapsed:.1f}s)")
+                total_passed += 1
+            else:
+                print(f"  Result: FAIL ({elapsed:.1f}s)")
+                for f in failures:
+                    print(f"    - {f}")
+                total_failed += 1
+
+        except Exception as e:
+            elapsed = time.time() - start
+            print(f"  Result: ERROR ({elapsed:.1f}s)")
+            print(f"    - {type(e).__name__}: {e}")
+            total_failed += 1
+
+    print("\n" + "=" * 60)
+    print(f"\nResults: {total_passed} passed, {total_failed} failed, "
+          f"{len(cases)} total")
+
+    if total_failed &gt; 0:
+        sys.exit(1)
+    else:
+        print("\nAll tests passed.")
+        sys.exit(0)
+
+
+if __name__ == "__main__":
+    run_eval()</code></pre>
+
+            <h4>Node.js &mdash; <code>tests/eval.js</code></h4>
+<pre><code>const fs = require("fs");
+const path = require("path");
+
+// Import the agent's run function
+// Adjust this path to match your project structure
+const { runAgent } = require("../src/agent");
+
+function loadTestCases(casesDir) {
+  const files = fs.readdirSync(casesDir)
+    .filter(f =&gt; f.endsWith(".json"))
+    .sort();
+
+  return files.map(file =&gt; {
+    const data = JSON.parse(
+      fs.readFileSync(path.join(casesDir, file), "utf-8")
+    );
+    data._file = file;
+    return data;
+  });
+}
+
+function checkResult(output, expected) {
+  const failures = [];
+
+  if (output == null) {
+    return { passed: false, failures: ["Output is null — system returned no result"] };
+  }
+
+  // Check minimum length
+  if (expected.min_length &amp;&amp; output.length &lt; expected.min_length) {
+    failures.push(
+      `Output too short: ${output.length} &lt; ${expected.min_length}`
+    );
+  }
+
+  // Check maximum length
+  if (expected.max_length &amp;&amp; output.length &gt; expected.max_length) {
+    failures.push(
+      `Output too long: ${output.length} &gt; ${expected.max_length}`
+    );
+  }
+
+  // Check must_contain
+  for (const phrase of (expected.must_contain || [])) {
+    if (!output.toLowerCase().includes(phrase.toLowerCase())) {
+      failures.push(`Missing required content: '${phrase}'`);
+    }
+  }
+
+  // Check must_not_contain
+  for (const phrase of (expected.must_not_contain || [])) {
+    if (output.toLowerCase().includes(phrase.toLowerCase())) {
+      failures.push(`Contains forbidden content: '${phrase}'`);
+    }
+  }
+
+  return { passed: failures.length === 0, failures };
+}
+
+async function runEval() {
+  const casesDir = path.join(__dirname, "cases");
+
+  if (!fs.existsSync(casesDir)) {
+    console.log("No test cases directory found at tests/cases/");
+    process.exit(1);
+  }
+
+  const cases = loadTestCases(casesDir);
+
+  if (cases.length === 0) {
+    console.log("No test cases found in tests/cases/");
+    process.exit(1);
+  }
+
+  let totalPassed = 0;
+  let totalFailed = 0;
+
+  console.log(`Running ${cases.length} test cases...\n`);
+  console.log("=".repeat(60));
+
+  for (const testCase of cases) {
+    const name = testCase.name;
+    const caseType = testCase.type || "unknown";
+    console.log(`\n[${caseType.toUpperCase()}] ${name}`);
+    console.log(`  File: ${testCase._file}`);
+    console.log(`  Input: ${testCase.input.slice(0, 80)}...`);
+
+    const start = Date.now();
+    try {
+      const output = await runAgent(testCase.input);
+      const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+
+      const { passed, failures } = checkResult(output, testCase.expected);
+
+      if (passed) {
+        console.log(`  Result: PASS (${elapsed}s)`);
+        totalPassed++;
+      } else {
+        console.log(`  Result: FAIL (${elapsed}s)`);
+        failures.forEach(f =&gt; console.log(`    - ${f}`));
+        totalFailed++;
+      }
+    } catch (err) {
+      const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+      console.log(`  Result: ERROR (${elapsed}s)`);
+      console.log(`    - ${err.name}: ${err.message}`);
+      totalFailed++;
+    }
+  }
+
+  console.log("\n" + "=".repeat(60));
+  console.log(
+    `\nResults: ${totalPassed} passed, ${totalFailed} failed, ${cases.length} total`
+  );
+
+  if (totalFailed &gt; 0) {
+    process.exit(1);
+  } else {
+    console.log("\nAll tests passed.");
+    process.exit(0);
+  }
+}
+
+runEval();</code></pre>
+
+            <h3>Step 4: Create Your Test Case Files</h3>
+            <p>Create the <code>tests/cases/</code> directory and add your test case JSON files. Here are the five cases to create (adapt the inputs and expected values to your system):</p>
+
+<pre><code>mkdir -p tests/cases</code></pre>
+
+            <h4>Case 1: <code>tests/cases/case-01-happy.json</code></h4>
+            <p>A standard, expected input.</p>
+
+            <h4>Case 2: <code>tests/cases/case-02-happy.json</code></h4>
+            <p>A different standard input to verify the system is not hard-coded for one example.</p>
+
+            <h4>Case 3: <code>tests/cases/case-03-edge.json</code></h4>
+            <p>An unusual but valid input: very short query, special characters, or uncommon topic.</p>
+
+            <h4>Case 4: <code>tests/cases/case-04-failure.json</code></h4>
+            <p>An invalid or empty input. The system should return a helpful message, not crash.</p>
+
+            <h4>Case 5: <code>tests/cases/case-05-quality.json</code></h4>
+            <p>An input where you check output quality: accuracy, relevance, completeness.</p>
+
+            <h3>Step 5: Run the Eval</h3>
+            <p>Execute your eval script and review the results.</p>
+
+            <h4>Python</h4>
+<pre><code>python tests/eval.py</code></pre>
+
+            <h4>Node.js</h4>
+<pre><code>node tests/eval.js</code></pre>
+
+            <p>You should see output like this:</p>
+<pre><code>Running 5 test cases...
+
+============================================================
+
+[HAPPY-PATH] Happy path — standard research topic
+  File: case-01-happy.json
+  Input: Summarize recent research on sleep and memory...
+  Result: PASS (3.2s)
+
+[HAPPY-PATH] Happy path — different topic
+  File: case-02-happy.json
+  Input: Summarize recent research on exercise and cognition...
+  Result: PASS (2.8s)
+
+[EDGE-CASE] Edge case — very short query
+  File: case-03-edge.json
+  Input: AI...
+  Result: PASS (2.1s)
+
+[FAILURE] Failure case — empty input
+  File: case-04-failure.json
+  Input: ...
+  Result: FAIL (1.4s)
+    - Missing required content: 'please provide'
+
+[QUALITY] Quality — checks for source citations
+  File: case-05-quality.json
+  Input: Summarize the impact of social media on teen mental health...
+  Result: PASS (4.1s)
+
+============================================================
+
+Results: 4 passed, 1 failed, 5 total</code></pre>
+
+            <h3>Step 6: Fix Failures and Commit</h3>
+            <p>If any tests fail, decide: is the test wrong, or is the system wrong?</p>
             <ul>
-            <li>What "pass" looks like (specific, measurable)</li>
-            <li>What "fail" looks like</li>
-            <li>Any partial credit criteria (for quality tests)</li>
+                <li>If the test criteria are too strict, loosen them. You can tighten them later.</li>
+                <li>If the system genuinely fails, fix the system. Then re-run the eval.</li>
             </ul>
-            <p><strong>Step 3: Implement Automated Checks (35 min)</strong></p>
-            <p>Create a test file that:</p>
-            <ul>
-            <li>Runs each test case through the system</li>
-            <li>Checks output against pass/fail criteria</li>
-            <li>Reports results: passed, failed, or error</li>
-            <li>Can be run with a single command (<code>npm test</code>, <code>pytest</code>, or a custom script)</li>
+            <p>Once you are satisfied with the results, commit:</p>
+<pre><code>git add -A
+git commit -m "test: add eval with 5 test cases and automated runner"</code></pre>
+
+            <!-- EXAMPLE TEST CASE FILLED OUT -->
+            <h2>Example: Complete Test Cases for a Research Summarizer</h2>
+            <p>Here are five complete test case files for the research summarizer agent from Module 05.</p>
+
+            <h4><code>tests/cases/case-01-happy.json</code></h4>
+<pre><code>{
+  "name": "Happy path — standard research topic",
+  "type": "happy-path",
+  "input": "Summarize recent research on sleep and memory consolidation",
+  "expected": {
+    "format": "markdown",
+    "must_contain": ["Key Findings", "Sources"],
+    "must_not_contain": ["[STUB]", "Traceback", "undefined"],
+    "min_length": 200,
+    "max_length": 5000
+  },
+  "pass_criteria": [
+    "Output is valid markdown",
+    "Contains a Key Findings section",
+    "Contains a Sources section",
+    "Between 200-5000 characters"
+  ]
+}</code></pre>
+
+            <h4><code>tests/cases/case-02-happy.json</code></h4>
+<pre><code>{
+  "name": "Happy path — different topic",
+  "type": "happy-path",
+  "input": "Summarize recent research on exercise and cognitive performance",
+  "expected": {
+    "format": "markdown",
+    "must_contain": ["Key Findings", "Sources"],
+    "must_not_contain": ["[STUB]", "Traceback", "undefined"],
+    "min_length": 200,
+    "max_length": 5000
+  },
+  "pass_criteria": [
+    "Output is valid markdown",
+    "Contains a Key Findings section",
+    "Contains a Sources section",
+    "Between 200-5000 characters"
+  ]
+}</code></pre>
+
+            <h4><code>tests/cases/case-03-edge.json</code></h4>
+<pre><code>{
+  "name": "Edge case — very short query",
+  "type": "edge-case",
+  "input": "AI",
+  "expected": {
+    "format": "markdown",
+    "must_contain": [],
+    "must_not_contain": ["[STUB]", "Traceback", "undefined"],
+    "min_length": 50,
+    "max_length": 5000
+  },
+  "pass_criteria": [
+    "System does not crash on minimal input",
+    "Output is at least 50 characters",
+    "No stub or error content in output"
+  ]
+}</code></pre>
+
+            <h4><code>tests/cases/case-04-failure.json</code></h4>
+<pre><code>{
+  "name": "Failure case — empty input",
+  "type": "failure",
+  "input": "",
+  "expected": {
+    "format": "text",
+    "must_contain": [],
+    "must_not_contain": ["Traceback", "TypeError", "Cannot read"],
+    "min_length": 1,
+    "max_length": 5000
+  },
+  "pass_criteria": [
+    "System does not crash",
+    "No stack trace in output",
+    "Returns some response (even an error message)"
+  ]
+}</code></pre>
+
+            <h4><code>tests/cases/case-05-quality.json</code></h4>
+<pre><code>{
+  "name": "Quality — checks for source citations",
+  "type": "quality",
+  "input": "Summarize the impact of social media on teen mental health",
+  "expected": {
+    "format": "markdown",
+    "must_contain": ["Key Findings", "Sources"],
+    "must_not_contain": ["[STUB]", "Traceback", "I don't know"],
+    "min_length": 300,
+    "max_length": 5000
+  },
+  "pass_criteria": [
+    "Output contains at least 2 key findings",
+    "Output cites at least 2 sources",
+    "Content is relevant to the topic",
+    "Between 300-5000 characters"
+  ]
+}</code></pre>
+
+            <!-- ARTIFACT TEMPLATE -->
+            <h2>Artifact Template</h2>
+            <p>Your eval directory should look like this when complete:</p>
+<pre><code>tests/
+  eval.py               # or eval.js — the automated eval runner
+  cases/
+    case-01-happy.json   # Standard input, expected output
+    case-02-happy.json   # Different standard input
+    case-03-edge.json    # Unusual but valid input
+    case-04-failure.json # Invalid input, graceful handling
+    case-05-quality.json # Quality evaluation case</code></pre>
+
+            <p>Add a test command to your project so tests can be run with a single command:</p>
+
+            <h4>Python &mdash; add to <code>README.md</code></h4>
+<pre><code># Run eval
+python tests/eval.py</code></pre>
+
+            <h4>Node.js &mdash; add to <code>package.json</code></h4>
+<pre><code>{
+  "scripts": {
+    "test": "node tests/eval.js"
+  }
+}</code></pre>
+            <p>Then run with: <code>npm test</code></p>
+
+            <!-- DONE CRITERIA -->
+            <h2>Done Criteria</h2>
+            <ul class="checklist">
+                <li>3&ndash;5 test cases written with specific inputs and expected outputs</li>
+                <li>Each test case has measurable pass/fail criteria</li>
+                <li>Test cases cover happy path, edge case, failure case, and quality</li>
+                <li>Automated eval script loads and runs all test cases</li>
+                <li>Eval script reports pass/fail for each case individually</li>
+                <li>Eval script exits with non-zero code if any test fails</li>
+                <li>All tests can be run with a single command</li>
+                <li>You have run the eval and reviewed the results</li>
+                <li>Code committed: <code>git commit -m "test: add eval with test cases and automated runner"</code></li>
             </ul>
-            <h3>Review (10 min)</h3>
-            <p>Each participant runs their test suite. Report:</p>
-            <ul>
-            <li>How many tests pass?</li>
-            <li>Which tests fail? Why?</li>
-            <li>What would you add with more time?</li>
-            </ul>
-            <h2>Participant Template</h2>
-            <h3>Test Case Template</h3>
-            <pre><code>
-            ## Test Case: [Name]
-            
-            **Input:**
-            [Exact input to provide to the system]
-            
-            **Expected Output:**
-            [What the system should produce — be specific about format and content]
-            
-            **Pass Criteria:**
-            - [ ] Output is in correct format
-            - [ ] Output contains [specific element]
-            - [ ] Output does not contain [specific anti-pattern]
-            
-            **Type:** happy-path | edge-case | failure | quality
-            </code></pre>
-            <h3>Eval Script Structure</h3>
-            <pre><code>
-            tests/
-              eval.{ts,py}           # Main eval runner
-              cases/
-                case-01-happy.json    # Test case data
-                case-02-happy.json
-                case-03-edge.json
-                case-04-failure.json
-                case-05-quality.json
-            </code></pre>
-            <h3>Minimum Eval Requirements</h3>
-            <ul>
-            <li>3+ test cases defined with inputs and expected outputs</li>
-            <li>Pass/fail criteria written for each case</li>
-            <li>Automated eval script that runs all cases</li>
-            <li>Script reports pass/fail per case</li>
-            <li>Script exits with non-zero code if any test fails</li>
-            <li>All tests can be run with a single command</li>
-            </ul>
-            <h2>Artifact</h2>
-            <p>Each participant commits: test cases, eval criteria, and automated eval script.</p>
+
+            <div class="module-nav">
+                <div><a href="05-implement-capability.html" class="prev">Module 05: Implement Capability</a></div>
+                <div><a href="07-add-interface.html" class="next">Module 07: Add Interface</a></div>
+            </div>
         </div>
     </div>
 
     <footer>
         <div class="container">
-            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <span class="footer-text">Operator Foundry &mdash; <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
             <div class="footer-links">
                 <a href="/">Home</a>
                 <a href="/privacy.html">Privacy Policy</a>

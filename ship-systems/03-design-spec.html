@@ -102,11 +102,6 @@
             color: #d4a853;
         }
 
-        .track-b {
-            background: rgba(0, 102, 255, 0.12);
-            color: #4d94ff;
-        }
-
         .content {
             padding: 0 0 80px;
         }
@@ -227,6 +222,46 @@
             font-weight: 600;
         }
 
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: "\2705";
+            position: absolute;
+            left: 0;
+        }
+
+        .module-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 60px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .module-nav a {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .module-nav .prev::before {
+            content: "\2190 ";
+        }
+
+        .module-nav .next::after {
+            content: " \2192";
+        }
+
         footer {
             padding: 40px 0;
             border-top: 1px solid var(--border);
@@ -290,98 +325,242 @@
 
     <div class="content">
         <div class="container">
-            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
-            <span class="track-badge track-a">Track A — Ship Systems</span>
+            <a href="/ship-os/" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-a">Track A &mdash; Ship Systems</span>
             <h1>Module 03: Design Spec</h1>
-            <h2>Ship Systems Weekend — Saturday, 11:00 AM</h2>
-            <h2>Objective</h2>
-            <p>Translate the system definition into a technical specification: architecture diagram, data flow, agent roles, and tool list. This is the blueprint you build from.</p>
-            <h2>Duration</h2>
-            <p>90 minutes (including lunch overlap — participants can eat while designing)</p>
-            <h2>Facilitator Guide</h2>
-            <h3>Frame (10 min)</h3>
-            <blockquote><p>"You now know what your system does. This module is about how it does it. By the end, you'll have a spec that another engineer could pick up and build from."</p>
+
+            <!-- WHAT YOU ARE BUILDING -->
+            <h2>What You Are Building</h2>
+            <p>In this module, you are designing the <strong>technical architecture</strong> of your AI system. You will produce an architecture spec that maps out every component, how data flows between them, what role each agent plays, and what tools and APIs you need. Your output is a completed <code>docs/architecture-spec.md</code> file.</p>
+
+            <!-- WHY IT MATTERS -->
+            <h2>Why It Matters</h2>
+            <p>Building without an architecture spec is like constructing a house without blueprints. You might get the walls up, but the plumbing will not connect and the wiring will be wrong. The architecture spec forces you to think through the technical design before you start coding. It answers questions you would otherwise discover mid-build: How many components do you need? What calls what? Where does the AI model fit? What external services are required? Spending 60 minutes on design now will save you hours of rework in Modules 04 through 08.</p>
+
+            <!-- STEP BY STEP -->
+            <h2>Step-by-Step Instructions</h2>
+
+            <h3>Step 1: Review Your System Definition</h3>
+            <p>Open <code>docs/system-definition.md</code> from Module 02. Read through your inputs, outputs, user scenario, and success criteria. Keep this file open&mdash;every architecture decision you make should trace back to something in this definition.</p>
+
+            <h3>Step 2: Generate a Draft Architecture with Claude</h3>
+            <p>Open Claude and use the following prompt. Paste your entire system definition into it.</p>
+
+<pre><code>I am building an AI system. Here is my system definition:
+
+[PASTE YOUR ENTIRE docs/system-definition.md HERE]
+
+Based on this definition, design a technical architecture for me.
+Include:
+
+1. An ASCII architecture diagram showing all components and how
+   they connect
+2. A components table listing each component, its responsibility,
+   and its technology/framework
+3. A data flow description showing the step-by-step path from
+   user input to final output
+4. An agent roles table (if using multiple AI agents) listing
+   each agent, its role, its model, and what tools it has access to
+5. A tools and API list showing every external service, API, or
+   library the system needs
+6. Key architecture decisions — list 3-5 decisions you made and
+   why (e.g., "Using a single agent instead of multi-agent because
+   the task is sequential")
+
+Keep it simple. I am one person building this in a few hours.
+Do not over-architect. Prefer fewer components.</code></pre>
+
+            <p>Review the output carefully. Claude may over-engineer the design. Watch for these warning signs:</p>
+            <ul>
+                <li>More than 5 components &mdash; simplify</li>
+                <li>Multiple databases &mdash; you probably need one or zero</li>
+                <li>Microservices architecture &mdash; use a monolith</li>
+                <li>Complex orchestration layers &mdash; keep it sequential</li>
+                <li>Technologies you have never used &mdash; swap for ones you know</li>
+            </ul>
+
+            <h3>Step 3: Draw the Architecture Diagram</h3>
+            <p>Create an ASCII diagram showing the components of your system and how they connect. This does not need to be beautiful. It needs to be clear. Every box is a component. Every arrow shows data flow.</p>
+            <p>Use this format:</p>
+
+<pre><code>[User Input] --> [Component A] --> [AI Model API] --> [Component B] --> [Output]
+                      |
+                      v
+                 [Database]</code></pre>
+
+            <p>If Claude generated a diagram in Step 2, use it as a starting point. Modify it until it accurately reflects what you plan to build.</p>
+
+            <h3>Step 4: Fill Out the Components Table</h3>
+            <p>For every box in your diagram, create a row in the components table. Each component needs a name, a one-sentence description of what it does, and the specific technology you will use to build it.</p>
+
+            <blockquote>
+                <p><strong>Keep it honest.</strong> If you do not know what technology to use for a component, write "TBD" and figure it out before you start Module 04. Do not pick technologies you have never used unless you are prepared to learn them.</p>
             </blockquote>
-            <p>Walk through the four components of a spec:</p>
-            <ol>
-            <li><strong>Architecture diagram</strong> — boxes and arrows. What are the components? How do they connect?</li>
-            <li><strong>Data flow</strong> — what data moves where? What transformations happen?</li>
-            <li><strong>Agent roles</strong> — if your system has agents, what does each one do? What are its boundaries?</li>
-            <li><strong>Tool list</strong> — what external tools, APIs, or services does each agent/component use?</li>
-            </ol>
-            <h3>Build Block (60 min)</h3>
-            <p>Participants fill out the spec template. Encourage hand-drawn architecture diagrams first — paper beats software for speed.</p>
-            <p>Common failure modes to watch for:</p>
-            <ul>
-            <li><strong>Over-architecting</strong>: three agents when one will do. Push for the simplest design that works.</li>
-            <li><strong>Missing data flow</strong>: they know the components but can't explain how data moves between them.</li>
-            <li><strong>Vague tool list</strong>: "uses an LLM" — which model? Which API? What parameters?</li>
+
+            <h3>Step 5: Map the Data Flow</h3>
+            <p>Write out the numbered steps that data takes from the moment the user provides input to the moment they receive output. Be specific about what format the data is in at each step and what transforms it.</p>
+
+            <h3>Step 6: Define Agent Roles</h3>
+            <p>If your system uses one or more AI agents, describe each one. Specify what model it uses, what its job is, and what tools or context it has access to. If you are using a single AI API call (not an agent), you can simplify this to one row describing the AI model call.</p>
+
+            <h3>Step 7: List Tools and APIs</h3>
+            <p>List every external dependency your system needs. This includes AI APIs, databases, file storage, third-party services, and libraries. For each one, note what it is used for and whether you already have access.</p>
+
+            <h3>Step 8: Document Key Decisions</h3>
+            <p>Write down 3-5 architectural decisions you made and why. This is not busy work&mdash;it forces you to be intentional. If you cannot explain why you chose something, you have not thought it through.</p>
+
+            <h3>Step 9: Validate Against Your System Definition</h3>
+            <p>Go back to <code>docs/system-definition.md</code>. For each input, trace its path through your architecture to the corresponding output. If any input cannot reach its output, your architecture has a gap. Fix it before moving on.</p>
+
+            <!-- ARTIFACT TEMPLATE -->
+            <h2>Artifact: Architecture Spec Template</h2>
+            <p>Copy this into <code>docs/architecture-spec.md</code> and fill out every section:</p>
+
+<pre><code># Architecture Spec
+
+## Architecture Diagram
+
+```
+[Replace with your ASCII architecture diagram]
+
+Example:
+[PDF Upload] --> [Parser] --> [Claude API] --> [Formatter] --> [JSON Output]
+                                  |
+                                  v
+                          [Prompt Template]
+```
+
+## Components
+
+| Component | Responsibility | Technology |
+|-----------|---------------|------------|
+| [Name]    | [What it does — one sentence] | [Framework/language/service] |
+| [Name]    | [What it does — one sentence] | [Framework/language/service] |
+| [Name]    | [What it does — one sentence] | [Framework/language/service] |
+
+## Data Flow
+
+1. User provides [input type] via [method]
+2. [Component A] receives the input and [does what]
+3. [Component A] sends [what data] to [Component B]
+4. [Component B] calls [AI API] with [what prompt/context]
+5. [AI API] returns [what response]
+6. [Component C] transforms the response into [output format]
+7. User receives [final output] via [method]
+
+## Agent Roles
+
+| Agent | Role | Model | Tools / Access |
+|-------|------|-------|----------------|
+| [Name] | [What this agent does] | [e.g., Claude 3.5 Sonnet] | [What tools/APIs it can call] |
+
+## Tools &amp; API List
+
+| Tool / Service | Purpose | Access Status |
+|---------------|---------|---------------|
+| [e.g., Anthropic API] | [e.g., Text analysis and extraction] | [Ready / Need to set up] |
+| [e.g., pdf-parse library] | [e.g., Extract text from PDF files] | [Ready / Need to install] |
+
+## Key Decisions
+
+1. **[Decision]**: [What you chose and why]
+2. **[Decision]**: [What you chose and why]
+3. **[Decision]**: [What you chose and why]</code></pre>
+
+            <!-- EXAMPLE OUTPUT -->
+            <h2>Example Output</h2>
+            <p>Here is a completed architecture spec for the Invoice Data Extractor from Module 02:</p>
+
+<pre><code># Architecture Spec
+
+## Architecture Diagram
+
+```
+[PDF File] --> [PDF Parser] --> [Text Chunker] --> [Claude API] --> [JSON Formatter] --> [JSON Output]
+                                                       |
+                                                       v
+                                               [Extraction Prompt
+                                                Template]
+```
+
+## Components
+
+| Component      | Responsibility                          | Technology        |
+|----------------|-----------------------------------------|-------------------|
+| PDF Parser     | Extracts raw text from uploaded PDF      | pdf-parse (npm)   |
+| Text Chunker   | Splits long documents into processable  | Custom JS (split  |
+|                | chunks under token limit                | by page)          |
+| Claude API     | Analyzes text and extracts structured    | Anthropic API     |
+|                | invoice fields                          | (Claude Sonnet)   |
+| JSON Formatter | Validates and formats extraction result  | Custom JS         |
+| CLI Interface  | Accepts file path, displays results      | Node.js (process  |
+|                |                                         | .argv)            |
+
+## Data Flow
+
+1. User provides a PDF file path as a CLI argument
+2. PDF Parser reads the file and extracts raw text (string)
+3. Text Chunker splits the text by page into chunks under 4000 tokens
+4. Each chunk is sent to Claude API with the extraction prompt template
+5. Claude API returns a JSON object with extracted fields and
+   confidence scores for each chunk
+6. JSON Formatter merges results from all chunks, resolves conflicts
+   (takes highest confidence), and validates required fields
+7. User receives formatted JSON printed to stdout (or written to file
+   with --output flag)
+
+## Agent Roles
+
+| Agent          | Role                    | Model              | Tools / Access     |
+|----------------|-------------------------|---------------------|--------------------|
+| Extractor      | Reads invoice text and  | Claude 3.5 Sonnet   | None (text in,     |
+|                | returns structured JSON |                     | JSON out)          |
+
+## Tools &amp; API List
+
+| Tool / Service    | Purpose                          | Access Status  |
+|-------------------|----------------------------------|----------------|
+| Anthropic API     | AI-powered field extraction      | Ready (key set)|
+| pdf-parse (npm)   | Extract text content from PDFs   | Need to install|
+| Node.js 20        | Runtime environment              | Ready          |
+| Commander.js      | CLI argument parsing             | Need to install|
+
+## Key Decisions
+
+1. **Single agent, not multi-agent**: The extraction task is sequential
+   (parse then extract). No need for agent coordination.
+2. **CLI over web app for v1**: Faster to build, easier to test.
+   Web interface can be added in Module 07.
+3. **Chunk by page, not by token**: Invoice data is page-oriented.
+   Splitting by page preserves context better than arbitrary token splits.
+4. **Claude Sonnet over Opus**: Sonnet is faster, cheaper, and
+   accurate enough for structured extraction. Can upgrade if needed.
+5. **No database**: System is stateless. Each invocation processes
+   one file and returns results. No persistence needed for v1.</code></pre>
+
+            <!-- DONE CRITERIA -->
+            <h2>Done Criteria</h2>
+            <ul class="checklist">
+                <li><code>docs/architecture-spec.md</code> exists in your project repository</li>
+                <li>The architecture diagram shows all components and their connections</li>
+                <li>The components table lists every component with its responsibility and technology</li>
+                <li>The data flow traces a complete path from user input to final output</li>
+                <li>Agent roles are defined with specific models and tool access</li>
+                <li>Every external tool, API, and library is listed with its access status</li>
+                <li>At least 3 key architecture decisions are documented with reasoning</li>
+                <li>Every input from your system definition has a clear path to its corresponding output</li>
             </ul>
-            <h3>Pair Review (20 min)</h3>
-            <p>Pair participants. Each person explains their spec to their partner in 5 minutes. Partner asks:</p>
-            <ul>
-            <li>"Where does [X input] go first?"</li>
-            <li>"What happens if [Y step] fails?"</li>
-            <li>"Which agent handles [Z task]?"</li>
-            </ul>
-            <p>If the builder can't answer clearly, the spec needs work.</p>
-            <h2>Participant Template</h2>
-            <h3>Architecture Spec</h3>
-            <p><strong>System Name:</strong> ___</p>
-            <p><strong>Architecture Diagram:</strong></p>
-            <p>_Draw or describe the components and their connections. Use ASCII, a photo of a whiteboard sketch, or a simple diagram tool._</p>
-            <pre><code>
-            [Component A] ---&gt; [Component B] ---&gt; [Output]
-                  |                  ^
-                  v                  |
-            [Component C] -----------+
-            </code></pre>
-            <p><strong>Components:</strong></p>
-            <table><thead><tr>
-            <th>Component</th>
-            <th>Responsibility</th>
-            <th>Technology</th>
-            </tr></thead><tbody>
-            </tbody></table>
-            <p><strong>Data Flow:</strong></p>
-            <ol>
-            <li>User provides [input] via [method]</li>
-            <li>[Component A] receives input and [action]</li>
-            <li>[Component A] sends [data] to [Component B]</li>
-            <li>[Component B] [processes/transforms] and produces [output]</li>
-            <li>[Output] is returned to user via [method]</li>
-            </ol>
-            <p><strong>Agent Roles</strong> (if applicable):</p>
-            <table><thead><tr>
-            <th>Agent</th>
-            <th>Role</th>
-            <th>Tools</th>
-            <th>Boundaries</th>
-            </tr></thead><tbody>
-            </tbody></table>
-            <p><strong>Tool & API List:</strong></p>
-            <table><thead><tr>
-            <th>Tool/API</th>
-            <th>Purpose</th>
-            <th>Auth Required</th>
-            <th>Cost</th>
-            </tr></thead><tbody>
-            </tbody></table>
-            <p><strong>Key Decisions:</strong></p>
-            <p>_List 2-3 architectural decisions you made and why._</p>
-            <ol>
-            <li>___</li>
-            <li>___</li>
-            <li>___</li>
-            </ol>
-            <h2>Artifact</h2>
-            <p>Each participant commits: <code>docs/architecture-spec.md</code> to their repo.</p>
+
+            <div class="module-nav">
+                <div><a href="02-define-system.html" class="prev">Module 02: Define System</a></div>
+                <div><a href="04-scaffold-agent.html" class="next">Module 04: Scaffold Agent</a></div>
+            </div>
         </div>
     </div>
 
     <footer>
         <div class="container">
-            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <span class="footer-text">Operator Foundry &mdash; <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
             <div class="footer-links">
                 <a href="/">Home</a>
                 <a href="/privacy.html">Privacy Policy</a>

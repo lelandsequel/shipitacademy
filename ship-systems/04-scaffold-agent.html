@@ -102,11 +102,6 @@
             color: #d4a853;
         }
 
-        .track-b {
-            background: rgba(0, 102, 255, 0.12);
-            color: #4d94ff;
-        }
-
         .content {
             padding: 0 0 80px;
         }
@@ -227,6 +222,46 @@
             font-weight: 600;
         }
 
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: "\2705";
+            position: absolute;
+            left: 0;
+        }
+
+        .module-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 60px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .module-nav a {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .module-nav .prev::before {
+            content: "\2190 ";
+        }
+
+        .module-nav .next::after {
+            content: " \2192";
+        }
+
         footer {
             padding: 40px 0;
             border-top: 1px solid var(--border);
@@ -290,107 +325,556 @@
 
     <div class="content">
         <div class="container">
-            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
-            <span class="track-badge track-a">Track A — Ship Systems</span>
+            <a href="/ship-os/" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-a">Track A &mdash; Ship Systems</span>
             <h1>Module 04: Scaffold Agent</h1>
-            <h2>Ship Systems Weekend — Saturday, 1:00 PM</h2>
-            <h2>Objective</h2>
-            <p>Set up the repository, create the agent skeleton, and stub out every tool. By the end of this module, you have a runnable project that does nothing yet — but has the right shape.</p>
-            <h2>Duration</h2>
-            <p>90 minutes</p>
-            <h2>Facilitator Guide</h2>
-            <h3>Frame (10 min)</h3>
-            <blockquote><p>"You have a spec. Now you build the skeleton. This module is about structure, not logic. When you're done, your project runs, your agent initializes, and every tool is a stub that returns a placeholder. No real logic yet — that's next module."</p>
-            </blockquote>
-            <p>Why scaffold first:</p>
-            <ul>
-            <li>Forces you to validate your architecture before writing business logic</li>
-            <li>Catches dependency issues early</li>
-            <li>Creates a commit checkpoint you can always return to</li>
-            <li>Makes the implementation module faster because the structure is settled</li>
-            </ul>
-            <h3>Build Block (70 min)</h3>
-            <p><strong>Step 1: Repository Setup (15 min)</strong></p>
-            <p>Participants should have a repo from the setup checklist. If not, create one now.</p>
-            <p>Required structure (adapt to language/framework):</p>
-            <pre><code>
-            project/
-              src/
-                agent.{ts,py}       # Main agent entry point
-                tools/               # One file per tool
-                  tool-a.{ts,py}
-                  tool-b.{ts,py}
-                config.{ts,py}       # Configuration and env vars
-              tests/                 # Empty for now — Module 06
-              docs/
-                system-definition.md # From Module 02
-                architecture-spec.md # From Module 03
-              .env.example           # Required env vars (no secrets)
-              README.md              # What the system does, how to run it
-            </code></pre>
-            <p><strong>Step 2: Agent Skeleton (25 min)</strong></p>
-            <ul>
-            <li>Initialize the agent with the chosen framework/SDK</li>
-            <li>Configure model, system prompt, and tool registration</li>
-            <li>Agent should start and respond to a basic health check</li>
-            </ul>
-            <p><strong>Step 3: Tool Stubs (30 min)</strong></p>
-            <ul>
-            <li>Create one file per tool from the architecture spec</li>
-            <li>Each tool stub: correct function signature, docstring, returns a placeholder</li>
-            <li>Register all tools with the agent</li>
-            <li>Run the agent — it should start without errors</li>
-            </ul>
-            <h3>Checkpoint</h3>
-            <blockquote><p>"Run your agent. Does it start? Does it list its tools? Can you send it a message and get a response (even a placeholder)? If yes, commit. If no, fix it before moving on."</p>
-            </blockquote>
-            <h2>Participant Checklist</h2>
-            <ul>
-            <li>Repository initialized with correct structure</li>
-            <li>README with project name, description, and run instructions</li>
-            <li><code>.env.example</code> with all required environment variables listed</li>
-            <li>Agent entry point created and runnable</li>
-            <li>System prompt written (from system definition)</li>
-            <li>All tools stubbed with correct signatures</li>
-            <li>All tools registered with agent</li>
-            <li>Agent starts without errors</li>
-            <li>Agent responds to basic input (even with placeholder output)</li>
-            <li>Code committed: <code>git commit -m "scaffold: agent skeleton with tool stubs"</code></li>
-            </ul>
+
+            <!-- WHAT YOU ARE BUILDING -->
+            <h2>What You Are Building</h2>
+            <p>A runnable project with the correct folder structure, an agent entry point that starts without errors, and stub functions for every tool in your architecture spec. When you finish this module, your agent runs, accepts input, and responds with placeholder output. No real logic yet &mdash; that comes next.</p>
+
+            <!-- WHY IT MATTERS -->
+            <h2>Why It Matters</h2>
+            <p>Scaffolding before implementing forces you to validate your architecture before writing business logic. You catch dependency issues, import errors, and structural problems while the cost of fixing them is low. It also creates a clean commit checkpoint you can always roll back to. When you start implementing real capability in the next module, the entire structure is already settled &mdash; you just fill in the blanks.</p>
+
+            <!-- STEP BY STEP -->
+            <h2>Step-by-Step Instructions</h2>
+
+            <h3>Step 1: Create the Folder Structure</h3>
+            <p>Open your terminal and create the project directories. Choose the path that matches your language.</p>
+
+            <h4>Python path</h4>
+<pre><code>mkdir -p my-agent/src/tools
+mkdir -p my-agent/tests
+mkdir -p my-agent/docs
+cd my-agent</code></pre>
+
+            <h4>Node.js path</h4>
+<pre><code>mkdir -p my-agent/src/tools
+mkdir -p my-agent/tests
+mkdir -p my-agent/docs
+cd my-agent</code></pre>
+
+            <p>Your directory should now look like this:</p>
+<pre><code>my-agent/
+  src/
+    tools/
+  tests/
+  docs/</code></pre>
+
+            <h3>Step 2: Initialize the Project</h3>
+
+            <h4>Python path</h4>
+<pre><code># Create a virtual environment
+python -m venv venv
+source venv/bin/activate    # macOS/Linux
+# venv\Scripts\activate     # Windows
+
+# Create requirements file
+cat &gt; requirements.txt &lt;&lt; 'EOF'
+openai&gt;=1.0.0
+python-dotenv&gt;=1.0.0
+EOF
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create .env.example
+cat &gt; .env.example &lt;&lt; 'EOF'
+OPENAI_API_KEY=your-api-key-here
+EOF
+
+# Create your actual .env (do not commit this)
+cp .env.example .env
+# Now edit .env and add your real API key</code></pre>
+
+            <h4>Node.js path</h4>
+<pre><code># Initialize the project
+npm init -y
+
+# Install dependencies
+npm install openai dotenv
+
+# Create .env.example
+cat &gt; .env.example &lt;&lt; 'EOF'
+OPENAI_API_KEY=your-api-key-here
+EOF
+
+# Create your actual .env (do not commit this)
+cp .env.example .env
+# Now edit .env and add your real API key</code></pre>
+
+            <p>Create a <code>.gitignore</code> file:</p>
+<pre><code># .gitignore
+.env
+node_modules/
+venv/
+__pycache__/
+*.pyc</code></pre>
+
+            <h3>Step 3: Create the Agent Entry Point</h3>
+            <p>This is the main file that initializes your agent, registers tools, and runs the interaction loop.</p>
+
+            <h4>Python path &mdash; <code>src/agent.py</code></h4>
+<pre><code>import os
+from dotenv import load_dotenv
+from openai import OpenAI
+
+# Import your tool stubs
+from tools.search import search
+from tools.transform import transform
+from tools.output import format_output
+
+load_dotenv()
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+# Define tools for the OpenAI function-calling API
+tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "search",
+            "description": "Search for relevant information based on a query.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "The search query"
+                    }
+                },
+                "required": ["query"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "transform",
+            "description": "Transform raw data into structured format.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "string",
+                        "description": "The raw data to transform"
+                    }
+                },
+                "required": ["data"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "format_output",
+            "description": "Format the final result for the user.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "string",
+                        "description": "The content to format"
+                    }
+                },
+                "required": ["content"]
+            }
+        }
+    }
+]
+
+# Map function names to actual functions
+tool_functions = {
+    "search": search,
+    "transform": transform,
+    "format_output": format_output,
+}
+
+SYSTEM_PROMPT = """You are a helpful assistant.
+Use your tools to answer the user's question.
+Always use the search tool first, then transform the data,
+then format the output."""
+
+def run_agent(user_input):
+    """Run the agent with a single user input and return the response."""
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": user_input}
+    ]
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=messages,
+        tools=tools,
+    )
+
+    message = response.choices[0].message
+
+    # Handle tool calls if any
+    if message.tool_calls:
+        for tool_call in message.tool_calls:
+            fn_name = tool_call.function.name
+            import json
+            fn_args = json.loads(tool_call.function.arguments)
+            result = tool_functions[fn_name](**fn_args)
+            messages.append(message)
+            messages.append({
+                "role": "tool",
+                "tool_call_id": tool_call.id,
+                "content": str(result)
+            })
+
+        final = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=messages,
+            tools=tools,
+        )
+        return final.choices[0].message.content
+
+    return message.content
+
+if __name__ == "__main__":
+    print("Agent is running. Type 'quit' to exit.")
+    print("Tools registered: search, transform, format_output")
+    print("-" * 40)
+    while True:
+        user_input = input("\nYou: ")
+        if user_input.lower() in ("quit", "exit"):
+            break
+        response = run_agent(user_input)
+        print(f"\nAgent: {response}")</code></pre>
+
+            <h4>Node.js path &mdash; <code>src/agent.js</code></h4>
+<pre><code>require("dotenv").config();
+const OpenAI = require("openai");
+const readline = require("readline");
+
+// Import your tool stubs
+const { search } = require("./tools/search");
+const { transform } = require("./tools/transform");
+const { formatOutput } = require("./tools/output");
+
+const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+// Define tools for the OpenAI function-calling API
+const tools = [
+  {
+    type: "function",
+    function: {
+      name: "search",
+      description: "Search for relevant information based on a query.",
+      parameters: {
+        type: "object",
+        properties: {
+          query: { type: "string", description: "The search query" }
+        },
+        required: ["query"]
+      }
+    }
+  },
+  {
+    type: "function",
+    function: {
+      name: "transform",
+      description: "Transform raw data into structured format.",
+      parameters: {
+        type: "object",
+        properties: {
+          data: { type: "string", description: "The raw data to transform" }
+        },
+        required: ["data"]
+      }
+    }
+  },
+  {
+    type: "function",
+    function: {
+      name: "format_output",
+      description: "Format the final result for the user.",
+      parameters: {
+        type: "object",
+        properties: {
+          content: { type: "string", description: "The content to format" }
+        },
+        required: ["content"]
+      }
+    }
+  }
+];
+
+// Map function names to actual functions
+const toolFunctions = {
+  search,
+  transform,
+  format_output: formatOutput,
+};
+
+const SYSTEM_PROMPT = `You are a helpful assistant.
+Use your tools to answer the user's question.
+Always use the search tool first, then transform the data,
+then format the output.`;
+
+async function runAgent(userInput) {
+  const messages = [
+    { role: "system", content: SYSTEM_PROMPT },
+    { role: "user", content: userInput }
+  ];
+
+  const response = await client.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages,
+    tools,
+  });
+
+  const message = response.choices[0].message;
+
+  // Handle tool calls if any
+  if (message.tool_calls) {
+    messages.push(message);
+    for (const toolCall of message.tool_calls) {
+      const fnName = toolCall.function.name;
+      const fnArgs = JSON.parse(toolCall.function.arguments);
+      const result = toolFunctions[fnName](fnArgs);
+      messages.push({
+        role: "tool",
+        tool_call_id: toolCall.id,
+        content: String(result),
+      });
+    }
+
+    const final = await client.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages,
+      tools,
+    });
+    return final.choices[0].message.content;
+  }
+
+  return message.content;
+}
+
+async function main() {
+  console.log("Agent is running. Type 'quit' to exit.");
+  console.log("Tools registered: search, transform, format_output");
+  console.log("-".repeat(40));
+
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  const askQuestion = () => {
+    rl.question("\nYou: ", async (input) => {
+      if (input.toLowerCase() === "quit" || input.toLowerCase() === "exit") {
+        rl.close();
+        return;
+      }
+      const response = await runAgent(input);
+      console.log(`\nAgent: ${response}`);
+      askQuestion();
+    });
+  };
+
+  askQuestion();
+}
+
+main();</code></pre>
+
+            <h3>Step 4: Create Tool Stubs</h3>
+            <p>Create one file per tool. Each stub has the correct function signature, a docstring describing what it will do, and returns placeholder data. Replace the example tool names below with the actual tools from your architecture spec.</p>
+
+            <h4>Python path</h4>
+            <p>Create <code>src/tools/__init__.py</code> (empty file to make it a package):</p>
+<pre><code># src/tools/__init__.py</code></pre>
+
+            <p>Create <code>src/tools/search.py</code>:</p>
+<pre><code>def search(query: str) -&gt; str:
+    """Search for relevant information based on a query.
+
+    TODO: Replace with real search logic (API call, database query, etc.)
+    """
+    return f"[STUB] Search results for: {query}"</code></pre>
+
+            <p>Create <code>src/tools/transform.py</code>:</p>
+<pre><code>def transform(data: str) -&gt; str:
+    """Transform raw data into structured format.
+
+    TODO: Replace with real transformation logic.
+    """
+    return f"[STUB] Transformed data: {data}"</code></pre>
+
+            <p>Create <code>src/tools/output.py</code>:</p>
+<pre><code>def format_output(content: str) -&gt; str:
+    """Format the final result for the user.
+
+    TODO: Replace with real formatting logic.
+    """
+    return f"[STUB] Formatted output: {content}"</code></pre>
+
+            <h4>Node.js path</h4>
+            <p>Create <code>src/tools/search.js</code>:</p>
+<pre><code>/**
+ * Search for relevant information based on a query.
+ * TODO: Replace with real search logic (API call, database query, etc.)
+ */
+function search({ query }) {
+  return `[STUB] Search results for: ${query}`;
+}
+
+module.exports = { search };</code></pre>
+
+            <p>Create <code>src/tools/transform.js</code>:</p>
+<pre><code>/**
+ * Transform raw data into structured format.
+ * TODO: Replace with real transformation logic.
+ */
+function transform({ data }) {
+  return `[STUB] Transformed data: ${data}`;
+}
+
+module.exports = { transform };</code></pre>
+
+            <p>Create <code>src/tools/output.js</code>:</p>
+<pre><code>/**
+ * Format the final result for the user.
+ * TODO: Replace with real formatting logic.
+ */
+function formatOutput({ content }) {
+  return `[STUB] Formatted output: ${content}`;
+}
+
+module.exports = { formatOutput };</code></pre>
+
+            <h3>Step 5: Run It and Verify</h3>
+            <p>Start your agent and confirm it runs without errors.</p>
+
+            <h4>Python path</h4>
+<pre><code>cd my-agent
+python src/agent.py</code></pre>
+
+            <h4>Node.js path</h4>
+<pre><code>cd my-agent
+node src/agent.js</code></pre>
+
+            <p>You should see:</p>
+<pre><code>Agent is running. Type 'quit' to exit.
+Tools registered: search, transform, format_output
+----------------------------------------</code></pre>
+
+            <p>Type a test message. The agent should respond &mdash; possibly calling your stub tools, which return placeholder text. That is correct. The agent runs, the tools are wired up, the structure works.</p>
+
+            <h3>Step 6: Commit Your Scaffold</h3>
+<pre><code>git init
+git add -A
+git commit -m "scaffold: agent skeleton with tool stubs"</code></pre>
+
+            <!-- ARTIFACT TEMPLATE -->
+            <h2>Artifact Template</h2>
+            <p>Your completed scaffold should have this structure. Copy and adapt it to match your system's actual tool names from your architecture spec.</p>
+<pre><code>my-agent/
+  .env.example              # Required env vars (no secrets)
+  .gitignore                # Excludes .env, node_modules, venv, etc.
+  requirements.txt          # Python: pinned dependencies
+  # or package.json         # Node: dependencies
+  src/
+    agent.py                # Main agent entry point
+    # or agent.js
+    tools/
+      __init__.py           # Python only
+      search.py             # Stub: correct signature, returns placeholder
+      transform.py          # Stub: correct signature, returns placeholder
+      output.py             # Stub: correct signature, returns placeholder
+      # or search.js, transform.js, output.js
+  tests/                    # Empty for now (Module 06)
+  docs/
+    system-definition.md    # From Module 02
+    architecture-spec.md    # From Module 03
+  README.md                 # What the system does, how to run it</code></pre>
+
+            <!-- EXAMPLE OUTPUT -->
+            <h2>Example Output</h2>
+            <p>Here is what a working scaffold session looks like:</p>
+<pre><code>$ python src/agent.py
+Agent is running. Type 'quit' to exit.
+Tools registered: search, transform, format_output
+----------------------------------------
+
+You: What is the weather in Tokyo?
+
+Agent: I searched for weather information about Tokyo.
+Here are the results: [STUB] Formatted output:
+[STUB] Transformed data: [STUB] Search results for: weather in Tokyo
+
+You: quit</code></pre>
+            <p>The output contains <code>[STUB]</code> placeholders everywhere. That is exactly right. The structure works. The tools are called in order. Real logic comes in Module 05.</p>
+
+            <!-- COMMON ISSUES -->
             <h2>Common Issues</h2>
-            <table><thead><tr>
-            <th>Problem</th>
-            <th>Fix</th>
-            </tr></thead><tbody>
-            <tr>
-            <td>Missing API key</td>
-            <td>Check <code>.env</code> file, confirm key is set</td>
-            </tr>
-            <tr>
-            <td>Import errors</td>
-            <td>Check package installation, run <code>npm install</code> or <code>pip install -r requirements.txt</code></td>
-            </tr>
-            <tr>
-            <td>Agent won't start</td>
-            <td>Check entry point, confirm main function is called</td>
-            </tr>
-            <tr>
-            <td>Tool not registered</td>
-            <td>Verify tool registration in agent config</td>
-            </tr>
-            <tr>
-            <td>Wrong SDK version</td>
-            <td>Check <code>package.json</code> or <code>requirements.txt</code> for version pinning</td>
-            </tr>
-            </tbody></table>
-            <h2>Artifact</h2>
-            <p>Each participant commits their scaffold: runnable agent with all tools stubbed.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Fix</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Missing API key</td>
+                        <td>Check your <code>.env</code> file. Confirm the key is set and the file is in the project root.</td>
+                    </tr>
+                    <tr>
+                        <td>Import errors (Python)</td>
+                        <td>Run <code>pip install -r requirements.txt</code>. Make sure <code>__init__.py</code> exists in the tools folder.</td>
+                    </tr>
+                    <tr>
+                        <td>Module not found (Node)</td>
+                        <td>Run <code>npm install</code>. Check that require paths match your file names.</td>
+                    </tr>
+                    <tr>
+                        <td>Agent won't start</td>
+                        <td>Check the entry point. Confirm the <code>if __name__</code> block (Python) or <code>main()</code> call (Node) exists at the bottom of the file.</td>
+                    </tr>
+                    <tr>
+                        <td>Tool not registered</td>
+                        <td>Verify the tool definition in the <code>tools</code> array matches the function name in <code>tool_functions</code>.</td>
+                    </tr>
+                    <tr>
+                        <td>Wrong SDK version</td>
+                        <td>Check <code>requirements.txt</code> or <code>package.json</code> for version pinning. The OpenAI SDK v1+ is required.</td>
+                    </tr>
+                    <tr>
+                        <td>Tool called but returns error</td>
+                        <td>Check that the stub function signature matches the parameters defined in the tool spec.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- DONE CRITERIA -->
+            <h2>Done Criteria</h2>
+            <ul class="checklist">
+                <li>Repository initialized with correct folder structure</li>
+                <li>Dependencies installed and <code>.env.example</code> created</li>
+                <li><code>.gitignore</code> excludes secrets and build artifacts</li>
+                <li>Agent entry point created and runnable</li>
+                <li>System prompt written (adapted from your system definition)</li>
+                <li>All tools stubbed with correct function signatures</li>
+                <li>All tools registered with the agent</li>
+                <li>Agent starts without errors</li>
+                <li>Agent responds to basic input (even with placeholder output)</li>
+                <li>Code committed: <code>git commit -m "scaffold: agent skeleton with tool stubs"</code></li>
+            </ul>
+
+            <div class="module-nav">
+                <div><a href="03-design-spec.html" class="prev">Module 03: Design Spec</a></div>
+                <div><a href="05-implement-capability.html" class="next">Module 05: Implement Capability</a></div>
+            </div>
         </div>
     </div>
 
     <footer>
         <div class="container">
-            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <span class="footer-text">Operator Foundry &mdash; <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
             <div class="footer-links">
                 <a href="/">Home</a>
                 <a href="/privacy.html">Privacy Policy</a>

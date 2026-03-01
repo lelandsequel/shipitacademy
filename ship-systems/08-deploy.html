@@ -102,11 +102,6 @@
             color: #d4a853;
         }
 
-        .track-b {
-            background: rgba(0, 102, 255, 0.12);
-            color: #4d94ff;
-        }
-
         .content {
             padding: 0 0 80px;
         }
@@ -227,6 +222,46 @@
             font-weight: 600;
         }
 
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: "\2705";
+            position: absolute;
+            left: 0;
+        }
+
+        .module-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 60px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .module-nav a {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .module-nav .prev::before {
+            content: "\2190 ";
+        }
+
+        .module-nav .next::after {
+            content: " \2192";
+        }
+
         footer {
             padding: 40px 0;
             border-top: 1px solid var(--border);
@@ -290,150 +325,289 @@
 
     <div class="content">
         <div class="container">
-            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
-            <span class="track-badge track-a">Track A — Ship Systems</span>
+            <a href="/ship-os/" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-a">Track A &mdash; Ship Systems</span>
             <h1>Module 08: Deploy</h1>
-            <h2>Ship Systems Weekend — Sunday, 1:00 PM</h2>
-            <h2>Objective</h2>
-            <p>Deploy your system to a live URL. When this module is done, anyone with the link can use your system. No "it works on my machine."</p>
-            <h2>Duration</h2>
-            <p>90 minutes</p>
-            <h2>Facilitator Guide</h2>
-            <h3>Frame (5 min)</h3>
-            <blockquote><p>"If it's not deployed, it's not shipped. This is the module where your project goes from a local script to a live system. Pick a platform, configure it, and get a URL."</p>
+
+            <!-- What You Are Building -->
+            <h2>What You Are Building</h2>
+            <p>A live deployed version of your AI system, accessible at a public URL. When this module is done, anyone with the link can use your system. No "it works on my machine."</p>
+
+            <!-- Why It Matters -->
+            <h2>Why It Matters</h2>
+            <p>If it is not deployed, it is not shipped. A system running on localhost is a prototype. A system running at a URL is a product. Deployment is the line between "I built something" and "I shipped something." It also forces you to handle real-world concerns: environment variables, dependency management, cold starts, and network behavior. These are the things that separate a project from production.</p>
+
+            <!-- Step-by-Step Instructions -->
+            <h2>Step-by-Step Instructions</h2>
+
+            <h3>Step 1: Choose Your Platform</h3>
+            <p>Pick one deployment platform. Use this table to decide based on what you built.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Platform</th>
+                        <th>Best For</th>
+                        <th>Free Tier</th>
+                        <th>Deploy Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Vercel</strong></td>
+                        <td>Next.js apps, static sites, serverless functions</td>
+                        <td>Yes</td>
+                        <td>~2 min</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Railway</strong></td>
+                        <td>Full-stack apps, Python APIs, background workers</td>
+                        <td>Yes (trial)</td>
+                        <td>~5 min</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fly.io</strong></td>
+                        <td>Docker containers, global deployment</td>
+                        <td>Yes</td>
+                        <td>~5 min</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Render</strong></td>
+                        <td>Web services, Python/Node APIs, static sites</td>
+                        <td>Yes</td>
+                        <td>~5 min</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Replit</strong></td>
+                        <td>Quick deploys, any language, minimal config</td>
+                        <td>Yes</td>
+                        <td>~1 min</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <blockquote>
+                <p>If you built a CLI-only system in Module 07, you need to wrap it in an API endpoint before deploying. A CLI cannot be accessed via URL. Go back and add a minimal API server using the API starter code from Module 07, then return here.</p>
             </blockquote>
-            <h3>Platform Selection (10 min)</h3>
-            <table><thead><tr>
-            <th>Platform</th>
-            <th>Best For</th>
-            <th>Free Tier</th>
-            <th>Deploy Time</th>
-            </tr></thead><tbody>
-            <tr>
-            <td><strong>Vercel</strong></td>
-            <td>Next.js, static sites, serverless functions</td>
-            <td>Yes</td>
-            <td>~2 min</td>
-            </tr>
-            <tr>
-            <td><strong>Railway</strong></td>
-            <td>Full-stack apps, APIs, background workers</td>
-            <td>Yes (trial)</td>
-            <td>~5 min</td>
-            </tr>
-            <tr>
-            <td><strong>Fly.io</strong></td>
-            <td>Docker containers, global deployment</td>
-            <td>Yes</td>
-            <td>~5 min</td>
-            </tr>
-            <tr>
-            <td><strong>Render</strong></td>
-            <td>Web services, APIs, static sites</td>
-            <td>Yes</td>
-            <td>~5 min</td>
-            </tr>
-            <tr>
-            <td><strong>Replit</strong></td>
-            <td>Quick deploys, any language</td>
-            <td>Yes</td>
-            <td>~1 min</td>
-            </tr>
-            </tbody></table>
-            <p>For CLI-only systems: deploy as an API endpoint. The interface module should have given you something deployable. If not, wrap your agent in a minimal API server now.</p>
-            <h3>Build Block (65 min)</h3>
-            <p><strong>Step 1: Platform Setup (15 min)</strong></p>
+
+            <h3>Step 2: Set Up Your Account and CLI</h3>
+            <p>Create an account on your chosen platform (if you do not already have one), then install the platform's CLI tool.</p>
+
+<pre><code># Vercel
+npm i -g vercel
+vercel login
+
+# Railway
+npm i -g @railway/cli
+railway login
+
+# Fly.io
+curl -L https://fly.io/install.sh | sh
+fly auth login
+
+# Render
+# No CLI needed — connect your GitHub repo at render.com
+
+# Replit
+# No CLI needed — import your repo at replit.com</code></pre>
+
+            <h3>Step 3: Configure Your Project</h3>
+            <p>Each platform needs to know how to build and start your project. Make sure these files exist in your repo root.</p>
+
+            <p><strong>For Python projects:</strong></p>
+<pre><code># requirements.txt — list all dependencies
+fastapi==0.104.1
+uvicorn==0.24.0
+openai==1.6.0
+# ... your other dependencies
+
+# Procfile (for Railway/Render)
+web: uvicorn server:app --host 0.0.0.0 --port $PORT</code></pre>
+
+            <p><strong>For Node projects:</strong></p>
+<pre><code>// In package.json, confirm these fields:
+{
+  "scripts": {
+    "start": "node server.js",
+    "build": "npm run build"   // if applicable
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}</code></pre>
+
+            <h3>Step 4: Set Environment Variables</h3>
+            <p>Your API keys and secrets must never be committed to your repo. Set them on the platform instead.</p>
+
+<pre><code># Vercel
+vercel env add OPENAI_API_KEY
+
+# Railway
+railway variables set OPENAI_API_KEY=sk-...
+
+# Fly.io
+fly secrets set OPENAI_API_KEY=sk-...
+
+# Render
+# Dashboard &gt; Your Service &gt; Environment &gt; Add Environment Variable
+
+# Replit
+# Secrets tab (lock icon) &gt; Add new secret</code></pre>
+
+            <p>Set every environment variable your system needs. Common ones:</p>
             <ul>
-            <li>Create account (if needed)</li>
-            <li>Install CLI tool or connect GitHub repo</li>
-            <li>Configure project settings</li>
+                <li><code>OPENAI_API_KEY</code> (or your AI provider's key)</li>
+                <li><code>PORT</code> (usually auto-set by the platform)</li>
+                <li>Any database URLs, webhook secrets, or third-party API keys</li>
             </ul>
-            <p><strong>Step 2: Environment Configuration (15 min)</strong></p>
-            <ul>
-            <li>Set all environment variables on the platform</li>
-            <li>Confirm API keys are configured (never commit secrets)</li>
-            <li>Set any platform-specific config (build commands, start commands, ports)</li>
-            </ul>
-            <p><strong>Step 3: Deploy (15 min)</strong></p>
-            <ul>
-            <li>Push to deploy (or trigger manual deploy)</li>
-            <li>Watch build logs for errors</li>
-            <li>Fix any build/deploy issues</li>
-            </ul>
-            <p><strong>Step 4: Verify (20 min)</strong></p>
-            <ul>
-            <li>Open the live URL</li>
-            <li>Run through the core flow with real input</li>
-            <li>Confirm output matches local behavior</li>
-            <li>Test from a different device or incognito window</li>
-            <li>Run eval suite against the deployed version (if possible)</li>
-            </ul>
-            <h3>Troubleshooting Session (10 min)</h3>
-            <blockquote><p>"Who has a live URL? Raise your hand."</p>
-            </blockquote>
-            <p>For those who don't:</p>
-            <ul>
-            <li>What error are you seeing?</li>
-            <li>Is it a build error or a runtime error?</li>
-            <li>Pair with someone who's deployed to debug</li>
-            </ul>
-            <h2>Participant Checklist</h2>
-            <ul>
-            <li>Platform account created</li>
-            <li>Project connected (via CLI or GitHub)</li>
-            <li>All environment variables set on the platform</li>
-            <li>Build succeeds</li>
-            <li>System is accessible at a live URL</li>
-            <li>Core flow works on the deployed version</li>
-            <li>URL added to README</li>
-            <li>Code committed and pushed</li>
-            </ul>
-            <h3>Deployment Record</h3>
-            <p><strong>Platform:</strong> ___</p>
-            <p><strong>Live URL:</strong> ___</p>
-            <p><strong>Deploy method:</strong> ___ (GitHub auto-deploy / CLI push / manual)</p>
-            <p><strong>Environment variables configured:</strong> Yes / No</p>
-            <p><strong>Core flow verified on live:</strong> Yes / No</p>
+
+            <h3>Step 5: Deploy</h3>
+            <p>Push your code to the platform. Watch the build logs for errors.</p>
+
+<pre><code># Vercel
+vercel --prod
+
+# Railway
+railway up
+
+# Fly.io
+fly launch    # first time
+fly deploy    # subsequent deploys
+
+# Render
+# Push to GitHub — auto-deploys if connected
+
+# Replit
+# Click "Run" then "Deploy"</code></pre>
+
+            <p>If the build fails, read the error message carefully. The most common issues are missing dependencies and incorrect start commands. Fix, commit, and redeploy.</p>
+
+            <h3>Step 6: Verify</h3>
+            <p>Open your live URL and run through the full flow.</p>
+            <ol>
+                <li>Open the live URL in your browser (or send a request with <code>curl</code>)</li>
+                <li>Provide real input — the same input you used in your eval tests</li>
+                <li>Confirm the output matches what you see locally</li>
+                <li>Open the URL in an incognito/private window to confirm it works without your local cookies or session</li>
+                <li>If possible, run your eval suite against the deployed URL</li>
+            </ol>
+
+<pre><code># Quick verification with curl (for API deployments)
+curl -X POST https://your-app.railway.app/api/run \
+  -H "Content-Type: application/json" \
+  -d '{"input": "your test input"}'</code></pre>
+
+            <h3>Step 7: Record Your Deployment</h3>
+            <p>Update your README with the live URL and commit.</p>
+<pre><code># Add to your README
+echo "\n## Live URL\nhttps://your-app.railway.app\n" &gt;&gt; README.md
+git add .
+git commit -m "Deploy to [platform] — live at [URL]"
+git push</code></pre>
+
+            <!-- Artifact Template -->
+            <h2>Deployment Record</h2>
+            <p>Copy this into your project notes or README.</p>
+<pre><code>## Deployment Record
+
+Platform:                   ___
+Live URL:                   ___
+Deploy method:              ___ (GitHub auto-deploy / CLI push / manual)
+Environment variables set:  Yes / No
+Core flow verified on live: Yes / No
+Verified from second device/incognito: Yes / No</code></pre>
+
+            <!-- Example Output -->
+            <h2>Example Output</h2>
+<pre><code>## Deployment Record
+
+Platform:                   Railway
+Live URL:                   https://contractscan.up.railway.app
+Deploy method:              CLI push (railway up)
+Environment variables set:  Yes (OPENAI_API_KEY)
+Core flow verified on live: Yes
+Verified from second device/incognito: Yes
+
+$ curl -X POST https://contractscan.up.railway.app/api/run \
+  -H "Content-Type: application/json" \
+  -d '{"input": "Summarize the key risks in this contract"}'
+
+{"result": "Key Risks Identified:\n1. Auto-renewal clause..."}</code></pre>
+
+            <!-- Troubleshooting -->
             <h2>Common Deploy Issues</h2>
-            <table><thead><tr>
-            <th>Issue</th>
-            <th>Platform</th>
-            <th>Fix</th>
-            </tr></thead><tbody>
-            <tr>
-            <td>Build fails</td>
-            <td>All</td>
-            <td>Check build logs, confirm dependencies are in package.json/requirements.txt</td>
-            </tr>
-            <tr>
-            <td>Missing env vars</td>
-            <td>All</td>
-            <td>Platform dashboard > Environment Variables, set each one</td>
-            </tr>
-            <tr>
-            <td>Port mismatch</td>
-            <td>Railway, Fly</td>
-            <td>Use <code>PORT</code> env var, don't hardcode port numbers</td>
-            </tr>
-            <tr>
-            <td>Timeout on AI calls</td>
-            <td>Vercel</td>
-            <td>Use serverless function with extended timeout, or switch to Railway</td>
-            </tr>
-            <tr>
-            <td>Cold start too slow</td>
-            <td>Vercel, Render</td>
-            <td>Expected on free tier. Note it in your demo.</td>
-            </tr>
-            </tbody></table>
-            <h2>Artifact</h2>
-            <p>Each participant: live deployed system accessible via URL.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Issue</th>
+                        <th>Platform</th>
+                        <th>Fix</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Build fails</td>
+                        <td>All</td>
+                        <td>Check build logs. Confirm all dependencies are in <code>package.json</code> or <code>requirements.txt</code>. Run the build command locally first.</td>
+                    </tr>
+                    <tr>
+                        <td>Missing env vars</td>
+                        <td>All</td>
+                        <td>Go to the platform dashboard and set each variable. The app will crash on startup if a required key is missing.</td>
+                    </tr>
+                    <tr>
+                        <td>Port mismatch</td>
+                        <td>Railway, Fly.io</td>
+                        <td>Use the <code>PORT</code> environment variable in your code. Do not hardcode a port number. Example: <code>app.listen(process.env.PORT || 3000)</code></td>
+                    </tr>
+                    <tr>
+                        <td>Timeout on AI calls</td>
+                        <td>Vercel</td>
+                        <td>Vercel serverless functions have a 10-second timeout on free tier. Use <code>maxDuration</code> in your route config, or switch to Railway for long-running requests.</td>
+                    </tr>
+                    <tr>
+                        <td>Cold start too slow</td>
+                        <td>Vercel, Render</td>
+                        <td>Expected on free tiers. The first request after inactivity will be slow. Note this in your demo — it is normal.</td>
+                    </tr>
+                    <tr>
+                        <td>Module not found</td>
+                        <td>All</td>
+                        <td>A dependency is missing from your package file. Run <code>pip freeze &gt; requirements.txt</code> or check <code>package.json</code> dependencies.</td>
+                    </tr>
+                    <tr>
+                        <td>CORS error in browser</td>
+                        <td>All</td>
+                        <td>Add CORS headers to your API. FastAPI: <code>from fastapi.middleware.cors import CORSMiddleware</code>. Express: <code>app.use(cors())</code>.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Done Criteria -->
+            <h2>Done Criteria</h2>
+            <ul class="checklist">
+                <li>Platform account created and CLI installed (if applicable)</li>
+                <li>Project configured with correct build and start commands</li>
+                <li>All environment variables set on the platform</li>
+                <li>Build succeeds without errors</li>
+                <li>System is accessible at a live public URL</li>
+                <li>Core flow works on the deployed version with real input</li>
+                <li>Verified from incognito window or second device</li>
+                <li>Live URL added to README</li>
+                <li>Deployment record filled out</li>
+                <li>Code committed and pushed</li>
+            </ul>
+
+            <div class="module-nav">
+                <div><a href="07-add-interface.html" class="prev">Module 07: Add Interface</a></div>
+                <div><a href="09-record-demo.html" class="next">Module 09: Record Demo</a></div>
+            </div>
         </div>
     </div>
 
     <footer>
         <div class="container">
-            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <span class="footer-text">Operator Foundry &mdash; <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
             <div class="footer-links">
                 <a href="/">Home</a>
                 <a href="/privacy.html">Privacy Policy</a>

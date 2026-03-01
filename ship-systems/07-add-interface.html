@@ -102,11 +102,6 @@
             color: #d4a853;
         }
 
-        .track-b {
-            background: rgba(0, 102, 255, 0.12);
-            color: #4d94ff;
-        }
-
         .content {
             padding: 0 0 80px;
         }
@@ -227,6 +222,46 @@
             font-weight: 600;
         }
 
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: "\2705";
+            position: absolute;
+            left: 0;
+        }
+
+        .module-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 60px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .module-nav a {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .module-nav .prev::before {
+            content: "\2190 ";
+        }
+
+        .module-nav .next::after {
+            content: " \2192";
+        }
+
         footer {
             padding: 40px 0;
             border-top: 1px solid var(--border);
@@ -290,103 +325,389 @@
 
     <div class="content">
         <div class="container">
-            <a href="/ship-os" class="back-link">&larr; Back to Ship OS</a>
-            <span class="track-badge track-a">Track A — Ship Systems</span>
+            <a href="/ship-os/" class="back-link">&larr; Back to Ship OS</a>
+            <span class="track-badge track-a">Track A &mdash; Ship Systems</span>
             <h1>Module 07: Add Interface</h1>
-            <h2>Ship Systems Weekend — Sunday, 10:30 AM</h2>
-            <h2>Objective</h2>
-            <p>Add a user-facing interface to your system. Your system works and is tested — now make it usable by someone who isn't you. Choose one: CLI, web UI, or API endpoint.</p>
-            <h2>Duration</h2>
-            <p>90 minutes</p>
-            <h2>Facilitator Guide</h2>
-            <h3>Frame (10 min)</h3>
-            <blockquote><p>"Your system works in a test harness. Now make it work for a user. Pick the interface that makes sense for your system and your audience. Don't overthink it — you have 90 minutes."</p>
+
+            <!-- What You Are Building -->
+            <h2>What You Are Building</h2>
+            <p>A user-facing interface for your AI system. By the end of this module, someone other than you will be able to use your system without touching the code. You will build one of three interface types: a CLI, a web UI, or an API endpoint.</p>
+
+            <!-- Why It Matters -->
+            <h2>Why It Matters</h2>
+            <p>Your system works in a test harness. That is useful to you, but useless to everyone else. An interface is the boundary between your code and the outside world. Without one, your system is a script on your laptop. With one, it is a tool someone can actually use. The interface is what makes the difference between a project and a product.</p>
+
+            <!-- Step-by-Step Instructions -->
+            <h2>Step-by-Step Instructions</h2>
+
+            <h3>Step 1: Choose Your Interface Type</h3>
+            <p>Pick one interface type. Do not build two. Use the table below to decide.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Interface</th>
+                        <th>Choose This When</th>
+                        <th>Recommended Tools</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>CLI</strong></td>
+                        <td>Your user is technical. The system is a tool or automation. Output is text.</td>
+                        <td>Python: <code>argparse</code>, <code>click</code> / Node: <code>commander</code>, <code>inquirer</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Web UI</strong></td>
+                        <td>You want a visual demo. The system has visual output or conversational input.</td>
+                        <td>Python: <code>Streamlit</code>, <code>Gradio</code> / Node: <code>Next.js</code>, plain HTML + fetch</td>
+                    </tr>
+                    <tr>
+                        <td><strong>API Endpoint</strong></td>
+                        <td>The system will be consumed by other software or needs programmatic access.</td>
+                        <td>Python: <code>FastAPI</code> / Node: <code>Express</code>, <code>Hono</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <blockquote>
+                <p>If you are unsure, pick Web UI. It is the easiest to demo and the most visually compelling for the demo recording in Module 09.</p>
             </blockquote>
-            <h3>Choosing an Interface (5 min)</h3>
-            <p>Help participants pick the right interface:</p>
-            <table><thead><tr>
-            <th>Interface</th>
-            <th>Best When</th>
-            <th>Tech Options</th>
-            </tr></thead><tbody>
-            <tr>
-            <td><strong>CLI</strong></td>
-            <td>Your user is technical, the system is a tool</td>
-            <td>argparse, commander, click, inquirer</td>
-            </tr>
-            <tr>
-            <td><strong>Web UI</strong></td>
-            <td>You want to demo visually, the system has visual output</td>
-            <td>Next.js, Streamlit, Gradio, plain HTML</td>
-            </tr>
-            <tr>
-            <td><strong>API Endpoint</strong></td>
-            <td>The system will be consumed by other software</td>
-            <td>Express, FastAPI, Hono</td>
-            </tr>
-            </tbody></table>
-            <p>Rule: pick one. Do not build two. You have 90 minutes.</p>
-            <h3>Build Block (70 min)</h3>
-            <p><strong>CLI path:</strong></p>
+
+            <h3>Step 2: Create the Interface File</h3>
+            <p>Create a new file in your project for the interface. Name it based on your choice:</p>
             <ul>
-            <li>Parse arguments or interactive prompts</li>
-            <li>Call the agent/system with parsed input</li>
-            <li>Display output in a readable format</li>
-            <li>Handle errors gracefully</li>
-            <li>Add <code>--help</code> flag</li>
+                <li><strong>CLI:</strong> <code>cli.py</code> or <code>cli.js</code></li>
+                <li><strong>Web UI:</strong> <code>app.py</code> (Streamlit/Gradio) or <code>app/page.tsx</code> (Next.js) or <code>index.html</code></li>
+                <li><strong>API:</strong> <code>server.py</code> or <code>server.js</code></li>
             </ul>
-            <p><strong>Web UI path:</strong></p>
-            <ul>
-            <li>Single page: input form and output display</li>
-            <li>Call the agent/system from the frontend or via a local API</li>
-            <li>Show loading state while processing</li>
-            <li>Display output clearly</li>
-            <li>No auth required for the weekend build</li>
-            </ul>
-            <p><strong>API path:</strong></p>
-            <ul>
-            <li>Single endpoint that accepts input</li>
-            <li>Calls the agent/system</li>
-            <li>Returns structured JSON output</li>
-            <li>Include basic error responses (400, 500)</li>
-            <li>Document the endpoint in README</li>
-            </ul>
-            <h3>Checkpoint (5 min)</h3>
-            <blockquote><p>"Can someone who has never seen your code use your system? If you handed them your laptop, could they figure it out in 60 seconds? If not, simplify."</p>
-            </blockquote>
-            <h2>Participant Checklist</h2>
+
+            <h3>Step 3: Build the Interface</h3>
+            <p>Follow the path that matches your choice. Each path includes starter code you can copy and adapt.</p>
+
+            <!-- CLI Path -->
+            <h4>Path A: CLI</h4>
+            <p>Build a command-line interface that accepts input, calls your system, and displays output.</p>
+            <ol>
+                <li>Import your agent/system module</li>
+                <li>Parse command-line arguments or set up interactive prompts</li>
+                <li>Call the system with the parsed input</li>
+                <li>Format and display the output</li>
+                <li>Add a <code>--help</code> flag with usage instructions</li>
+                <li>Add error handling that shows useful messages, not stack traces</li>
+            </ol>
+
+            <p><strong>Python starter (argparse):</strong></p>
+<pre><code>#!/usr/bin/env python3
+"""CLI interface for [your system name]."""
+import argparse
+import sys
+from agent import run_agent  # import your agent
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="[Your system] - [one-line description]"
+    )
+    parser.add_argument("input", help="The input to process")
+    parser.add_argument(
+        "--format", choices=["text", "json"], default="text",
+        help="Output format (default: text)"
+    )
+    args = parser.parse_args()
+
+    try:
+        result = run_agent(args.input)
+        if args.format == "json":
+            import json
+            print(json.dumps(result, indent=2))
+        else:
+            print(result)
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()</code></pre>
+
+            <p><strong>Node starter (commander):</strong></p>
+<pre><code>#!/usr/bin/env node
+// CLI interface for [your system name]
+const { Command } = require("commander");
+const { runAgent } = require("./agent"); // import your agent
+
+const program = new Command();
+
+program
+  .name("your-system")
+  .description("[one-line description]")
+  .argument("&lt;input&gt;", "The input to process")
+  .option("--json", "Output as JSON")
+  .action(async (input, options) =&gt; {
+    try {
+      const result = await runAgent(input);
+      if (options.json) {
+        console.log(JSON.stringify(result, null, 2));
+      } else {
+        console.log(result);
+      }
+    } catch (err) {
+      console.error(`Error: ${err.message}`);
+      process.exit(1);
+    }
+  });
+
+program.parse();</code></pre>
+
+            <p>Test it by running:</p>
+<pre><code># Python
+python cli.py "your test input"
+python cli.py --help
+
+# Node
+node cli.js "your test input"
+node cli.js --help</code></pre>
+
+            <!-- Web UI Path -->
+            <h4>Path B: Web UI</h4>
+            <p>Build a single-page web interface with an input form, a submit action, a loading state, and an output display.</p>
+            <ol>
+                <li>Set up the page with an input form</li>
+                <li>Wire the submit button to call your system</li>
+                <li>Show a loading indicator while processing</li>
+                <li>Display the output on the page</li>
+                <li>Handle errors with a visible message</li>
+            </ol>
+
+            <p><strong>Streamlit starter:</strong></p>
+<pre><code>"""Web UI for [your system name]."""
+import streamlit as st
+from agent import run_agent  # import your agent
+
+st.set_page_config(page_title="[Your System Name]")
+st.title("[Your System Name]")
+st.write("[One-line description of what the system does.]")
+
+user_input = st.text_area("Input", placeholder="Enter your input here...")
+
+if st.button("Run"):
+    if not user_input.strip():
+        st.warning("Please enter some input.")
+    else:
+        with st.spinner("Processing..."):
+            try:
+                result = run_agent(user_input)
+                st.success("Done.")
+                st.write(result)
+            except Exception as e:
+                st.error(f"Error: {e}")</code></pre>
+
+            <p><strong>Plain HTML + fetch starter:</strong></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;[Your System Name]&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: sans-serif; max-width: 640px; margin: 40px auto; }
+    textarea { width: 100%; height: 120px; }
+    #output { white-space: pre-wrap; background: #f5f5f5; padding: 16px; margin-top: 16px; }
+    .loading { color: #888; }
+    .error { color: #c00; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;[Your System Name]&lt;/h1&gt;
+  &lt;p&gt;[One-line description.]&lt;/p&gt;
+  &lt;textarea id="input" placeholder="Enter your input..."&gt;&lt;/textarea&gt;
+  &lt;button onclick="run()"&gt;Run&lt;/button&gt;
+  &lt;div id="output"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    async function run() {
+      const input = document.getElementById("input").value;
+      const output = document.getElementById("output");
+      output.className = "loading";
+      output.textContent = "Processing...";
+      try {
+        const res = await fetch("/api/run", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ input })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Request failed");
+        output.className = "";
+        output.textContent = data.result;
+      } catch (err) {
+        output.className = "error";
+        output.textContent = "Error: " + err.message;
+      }
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <p>Test it by running:</p>
+<pre><code># Streamlit
+streamlit run app.py
+# Then open http://localhost:8501
+
+# Plain HTML (you'll need the API server running too)
+# Open index.html in a browser or serve with: python -m http.server 3000</code></pre>
+
+            <!-- API Path -->
+            <h4>Path C: API Endpoint</h4>
+            <p>Build a single API endpoint that accepts JSON input and returns structured JSON output.</p>
+            <ol>
+                <li>Set up a minimal server with one POST endpoint</li>
+                <li>Parse the JSON request body</li>
+                <li>Call your system with the parsed input</li>
+                <li>Return structured JSON output</li>
+                <li>Return appropriate error codes (400 for bad input, 500 for server errors)</li>
+                <li>Document the endpoint in your README</li>
+            </ol>
+
+            <p><strong>FastAPI starter:</strong></p>
+<pre><code>"""API endpoint for [your system name]."""
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from agent import run_agent  # import your agent
+
+app = FastAPI(title="[Your System Name]")
+
+class RunRequest(BaseModel):
+    input: str
+
+class RunResponse(BaseModel):
+    result: str
+
+@app.post("/api/run", response_model=RunResponse)
+async def run(request: RunRequest):
+    if not request.input.strip():
+        raise HTTPException(status_code=400, detail="Input cannot be empty")
+    try:
+        result = run_agent(request.input)
+        return RunResponse(result=result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))</code></pre>
+
+            <p><strong>Express starter:</strong></p>
+<pre><code>// API endpoint for [your system name]
+const express = require("express");
+const { runAgent } = require("./agent"); // import your agent
+
+const app = express();
+app.use(express.json());
+
+app.post("/api/run", async (req, res) =&gt; {
+  const { input } = req.body;
+  if (!input || !input.trim()) {
+    return res.status(400).json({ error: "Input cannot be empty" });
+  }
+  try {
+    const result = await runAgent(input);
+    res.json({ result });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () =&gt; {
+  console.log(`Server running on http://localhost:${PORT}`);
+});</code></pre>
+
+            <p>Test it by running:</p>
+<pre><code># FastAPI
+uvicorn server:app --reload
+# Then test: curl -X POST http://localhost:8000/api/run \
+#   -H "Content-Type: application/json" \
+#   -d '{"input": "your test input"}'
+
+# Express
+node server.js
+# Then test: curl -X POST http://localhost:3000/api/run \
+#   -H "Content-Type: application/json" \
+#   -d '{"input": "your test input"}'</code></pre>
+
+            <h3>Step 4: Test with Fresh Eyes</h3>
+            <p>Ask yourself this question: if someone who has never seen your code opened your interface right now, could they figure out what to do within 60 seconds? If the answer is no, simplify. Remove options, add placeholder text, make the default action obvious.</p>
+
+            <h3>Step 5: Commit Your Interface</h3>
+<pre><code>git add .
+git commit -m "Add user interface ([cli/web/api])"</code></pre>
+
+            <!-- Artifact Template -->
+            <h2>Artifact Template</h2>
+            <p>Copy the starter code for your chosen path above. Replace the bracketed placeholders with your system's actual module imports, names, and descriptions. The artifact for this module is the working interface file committed to your repo.</p>
+
+            <!-- Example Output -->
+            <h2>Example Output</h2>
+            <p>Here is what a completed CLI interface looks like when run:</p>
+<pre><code>$ python cli.py "Summarize the key risks in this contract"
+Analyzing contract...
+
+Key Risks Identified:
+1. Auto-renewal clause (Section 4.2) - locks you in for 2-year cycles
+2. Unlimited liability for data breaches (Section 7.1) - no cap specified
+3. Non-compete extends 18 months post-termination (Section 12.3)
+
+Recommendation: Negotiate caps on items 1 and 2 before signing.
+
+$ python cli.py --help
+usage: cli.py [-h] [--format {text,json}] input
+
+ContractScan - Identifies risks in legal contracts
+
+positional arguments:
+  input                 The contract text or file path to analyze
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --format {text,json}  Output format (default: text)</code></pre>
+
+            <!-- Done Criteria -->
+            <h2>Done Criteria</h2>
+
             <h3>CLI</h3>
-            <ul>
-            <li>Entry point command works (<code>node cli.js</code>, <code>python cli.py</code>, or binary)</li>
-            <li>Accepts input via arguments or interactive prompts</li>
-            <li>Displays output in readable format</li>
-            <li><code>--help</code> shows usage instructions</li>
-            <li>Errors display useful messages (not stack traces)</li>
+            <ul class="checklist">
+                <li>Entry point command works (<code>node cli.js</code> or <code>python cli.py</code>)</li>
+                <li>Accepts input via arguments or interactive prompts</li>
+                <li>Displays output in a readable format</li>
+                <li><code>--help</code> shows usage instructions</li>
+                <li>Errors display useful messages, not stack traces</li>
+                <li>Interface file committed to repo</li>
             </ul>
+
             <h3>Web UI</h3>
-            <ul>
-            <li>Starts with a single command (<code>npm run dev</code>, <code>streamlit run app.py</code>)</li>
-            <li>Input form accepts user data</li>
-            <li>Submit button triggers the system</li>
-            <li>Loading state visible during processing</li>
-            <li>Output displays clearly on the page</li>
+            <ul class="checklist">
+                <li>Starts with a single command (<code>streamlit run app.py</code> or <code>npm run dev</code>)</li>
+                <li>Input form accepts user data</li>
+                <li>Submit button triggers the system</li>
+                <li>Loading state is visible during processing</li>
+                <li>Output displays clearly on the page</li>
+                <li>Interface file committed to repo</li>
             </ul>
+
             <h3>API</h3>
-            <ul>
-            <li>Server starts with a single command</li>
-            <li>Endpoint accepts POST with JSON body</li>
-            <li>Returns structured JSON response</li>
-            <li>Returns appropriate error codes</li>
-            <li>README documents the endpoint, request format, and response format</li>
+            <ul class="checklist">
+                <li>Server starts with a single command</li>
+                <li>Endpoint accepts POST with JSON body</li>
+                <li>Returns structured JSON response</li>
+                <li>Returns appropriate error codes (400, 500)</li>
+                <li>README documents the endpoint, request format, and response format</li>
+                <li>Interface file committed to repo</li>
             </ul>
-            <h2>Artifact</h2>
-            <p>Each participant commits: working interface (CLI, web UI, or API endpoint) that a user can interact with.</p>
+
+            <div class="module-nav">
+                <div><a href="06-add-eval.html" class="prev">Module 06: Add Eval</a></div>
+                <div><a href="08-deploy.html" class="next">Module 08: Deploy</a></div>
+            </div>
         </div>
     </div>
 
     <footer>
         <div class="container">
-            <span class="footer-text">Operator Foundry — <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
+            <span class="footer-text">Operator Foundry &mdash; <a href="https://shipitacademy.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">ShipItAcademy.com</a></span>
             <div class="footer-links">
                 <a href="/">Home</a>
                 <a href="/privacy.html">Privacy Policy</a>
